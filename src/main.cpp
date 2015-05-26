@@ -387,13 +387,21 @@ int main()
 			userSetResolution = false;
 		}
 		
+		renderMutex.lock();
+
 		while (gui.isOpen())
 		{
+
+			renderMutex.unlock();
 			
 // **************************** EVENT LOOP **********************************
 			
+			renderMutex.lock();
+
 			while (gui.pollEvent(useraction))
 			{
+				renderMutex.unlock();
+
 				/* MS Windows
 				// Resize event (updates resolution variables)
 				if (useraction.type == sf::Event::Resized)
@@ -543,15 +551,19 @@ int main()
 						}
 					}
 				}
+
+				renderMutex.lock();
 			}
+
+			renderMutex.unlock();
 
 // **************************************************************************
 			
 // ************************ VARIABLE UPDATES ********************************
 			
-			currentMousePosition = usermouse.getPosition(gui);
-			
 			renderMutex.lock();
+
+			currentMousePosition = usermouse.getPosition(gui);
 			
 			// Changes mouseInMenu to 'f' if mouse is within "File" menu box area
 			if ( (currentMousePosition.x >= 2 && currentMousePosition.x <= (menu_file_bounds.width + 12) ) && (currentMousePosition.y >= 2 && currentMousePosition.y <= 20) )
@@ -630,7 +642,11 @@ int main()
 
 			// Allows the CPU to "breathe" (looping in thread is demanding)
 			sf::sleep(sf::milliseconds(1));
+
+			renderMutex.lock();
 		}
+
+		renderMutex.unlock();
 	
 	}
 	while (userSetResolution);
@@ -3348,6 +3364,8 @@ void renderObjects (renderVariables *variablestruct)
 //	Disclaimer:
 //	renderVarInstance.BottomText = &bottomtext;
 	
+	renderMutex.lock();
+
 	while ( variablestruct->XGui->isOpen() )
 	{
 		variablestruct->XGui->clear(sf::Color(220,220,220));
@@ -3358,7 +3376,6 @@ void renderObjects (renderVariables *variablestruct)
 		// Draw disclamer text
 		variablestruct->XGui->draw(*(variablestruct->BottomText));
 		
-		renderMutex.lock();
 
 		// If mouse is within "File" menu box area
 		if( *(variablestruct->MouseInArea) == 'f' )
@@ -3430,15 +3447,18 @@ void renderObjects (renderVariables *variablestruct)
 			variablestruct->XGui->draw(*(variablestruct->SubmenuExit));
 		}
 		
-		renderMutex.unlock();
-		
 		// Draw menu text "File"
 		variablestruct->XGui->draw(*(variablestruct->MenuFile));
 		variablestruct->XGui->display();
 		
+		renderMutex.unlock();
+
 		// Allows the CPU to "breathe" (looping in thread is demanding)
 		sf::sleep(sf::milliseconds(1));
+
+		renderMutex.lock();
 	}
+	renderMutex.unlock();
 }
 
 // **************************************************************************
