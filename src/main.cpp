@@ -81,6 +81,14 @@ void renderObjects (renderVariables *variablestruct);	// Contains all draw funct
 void saveOutput (sf::String OutputString, sf::Font font); // Creates and draws save window
 std::string to_std_string(const sf::String& original);	// Takes sf::String (UTF-32) and returns std::string (UTF-8)
 
+#include "hiragana.cpp"
+#include "katakana.cpp"
+#include "concatenate.cpp"
+#include "backspace.cpp"
+#include "renderdraw.cpp"
+#include "savewindow.cpp"
+#include "stringconvert.cpp"
+
 // --------------------------------------------------------------------------
 // ---   ---   ---   ---   -  MAIN FUNCTION  -   ---   ---   ---   ---   ---
 // --------------------------------------------------------------------------
@@ -653,6 +661,8 @@ int main()
 	
 	return 1;
 }
+
+/*
 
 // --------------------------------------------------------------------------
 //    ---   ---   ---   -  FUNCTION DEFINITIONS  -   ---   ---   ---   ---
@@ -1406,12 +1416,14 @@ sf::String toHiragana (sf::String InputString)
 		lastChar1 = 12435;
 		kanaOut += lastChar1;
 	}
-	/* N/n
-	else if (lastChar1 == 78 || lastChar1 == 110)
-	{
-		lastChar1 = 12435;
-		kanaOut += lastChar1;
-	}*/
+
+	// N/n
+	// else if (lastChar1 == 78 || lastChar1 == 110)
+	// {
+	//	lastChar1 = 12435;
+	//	kanaOut += lastChar1;
+	// }
+
 	// ,
 	else if (lastChar1 == 44)
 	{
@@ -2229,12 +2241,14 @@ sf::String toKatakana (sf::String InputString)
 		lastChar1 = 12531;
 		kanaOut += lastChar1;
 	}
-	/* N/n
-	else if (lastChar1 == 78 || lastChar1 == 110)
-	{
-		lastChar1 = 12531;
-		kanaOut += lastChar1;
-	}*/
+
+	// N/n
+	// else if (lastChar1 == 78 || lastChar1 == 110)
+	// {
+	//	lastChar1 = 12531;
+	//	kanaOut += lastChar1;
+	// }
+
 	// ,
 	else if (lastChar1 == 44)
 	{
@@ -3537,36 +3551,36 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	
 	sf::String defaultpath;
 
-	/* MS Windows (backslash shenanigans)
+	// MS Windows (backslash shenanigans)
 	// String containing file path
-	TCHAR filepath_ptr[MAX_PATH];
-	if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
-	{
-		filepath = filepath_ptr;
-		bool endofstring = false;
-		std::size_t slashpos = 0;
-		while (!endofstring)
-		{
-			slashpos = filepath.find("\\");
-			if (slashpos == sf::String::InvalidPos)
-			{
-				endofstring = true;
-			}
-			else
-			{
-				filepath.erase(slashpos, 1);
-				filepath.insert(slashpos, "/");
-			}
-		}
-		filepath += "/Untitled.txt";
-		defaultpath = filepath;
-	}
-	else
-	{
-		errorstring = "Error: Folder path is invalid or folder could not be created.";
-		openfilesuccess = false;
-	}
-	*/
+	//TCHAR filepath_ptr[MAX_PATH];
+	//if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
+	//{
+	//	filepath = filepath_ptr;
+	//	bool endofstring = false;
+	//	std::size_t slashpos = 0;
+	//	while (!endofstring)
+	//	{
+	//		slashpos = filepath.find("\\");
+	//		if (slashpos == sf::String::InvalidPos)
+	//		{
+	//			endofstring = true;
+	//		}
+	//		else
+	//		{
+	//			filepath.erase(slashpos, 1);
+	//			filepath.insert(slashpos, "/");
+	//		}
+	//	}
+	//	filepath += "/Untitled.txt";
+	//	defaultpath = filepath;
+	//}
+	//else
+	//{
+	//	errorstring = "Error: Folder path is invalid or folder could not be created.";
+	//	openfilesuccess = false;
+	//}
+
 	
 	while (saveWindow.isOpen())
 	{
@@ -3709,3 +3723,5 @@ std::string to_std_string(const sf::String& original)
 }
 
 // **************************************************************************
+
+*/
