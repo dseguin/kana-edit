@@ -1,3 +1,5 @@
+#include "../include/stringconvert.hpp"
+
 // Takes sf::String (UTF-32) and returns std::string (UTF-8)
 std::string to_std_string(const sf::String& original)
 {

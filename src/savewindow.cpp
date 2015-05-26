@@ -1,3 +1,5 @@
+#include "../include/savewindow.hpp"
+
 // Creates and draws save window
 void saveOutput ( sf::String OutputString, sf::Font font )
 {

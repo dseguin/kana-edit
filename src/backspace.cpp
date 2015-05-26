@@ -1,3 +1,5 @@
+#include "../include/backspace.hpp"
+
 // Process backspace
 void kanaBackspace (threadVariables variablestruct)
 {

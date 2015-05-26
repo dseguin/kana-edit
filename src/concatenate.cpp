@@ -1,3 +1,5 @@
+#include "../include/concatenate.hpp"
+
 // Takes struct containing references and concatenates to stringout
 void concatenateKana (threadVariables variablestruct)
 {

@@ -1,3 +1,5 @@
+#include "../include/hiragana.hpp"
+
 // Accepts input (stringin) and returns sf::String with corresponding kana
 sf::String toHiragana (sf::String InputString)
 {

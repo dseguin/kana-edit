@@ -1,3 +1,5 @@
+#include "../include/katakana.hpp"
+
 // Accepts input (stringin) and returns sf::String with corresponding kana
 sf::String toKatakana (sf::String InputString)
 {
