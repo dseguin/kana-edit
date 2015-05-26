@@ -314,8 +314,11 @@ int main()
 //   ---   ---   ---   -  GUI WINDOW DECLARATION  -   ---   ---   ---   ---
 // --------------------------------------------------------------------------
 
+		/* MS Windows
 		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" );
-	
+		*/
+		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" , sf::Style::Close );
+		
 		gui.setIcon ( kana_icon.width,  kana_icon.height,  kana_icon.pixel_data );
 	
 // --------------------------------------------------------------------------
@@ -391,6 +394,7 @@ int main()
 			
 			while (gui.pollEvent(useraction))
 			{
+				/* MS Windows
 				// Resize event (updates resolution variables)
 				if (useraction.type == sf::Event::Resized)
 				{
@@ -401,6 +405,8 @@ int main()
 					outputStorage = stringout;
 					gui.close();
 				}
+				*/
+
 				// Close button event
 				if (useraction.type == sf::Event::Closed)
 				{
