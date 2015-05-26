@@ -1,0 +1,56 @@
+/*
+	THINGS TO DO EVENTUALLY
+		Add menu capabilities
+			-Add keyboard shortcuts for menu options
+			-Adjustable text size
+			-Enable copying text to clipboard (copy/paste)
+			-An "about" option/authoring information window
+			-Manage settings/config files
+		Make kana conversion output to stringin (same field for input/output)
+		Implement vertical window scrolling (figure it out)
+		Separate components between files (headers, DLLs)
+*/
+
+/*
+	KNOWN BUGS
+		Problems with 'n' character
+			-Typing a legitimate single letter character after 'n' results in that character having no output
+			-Affects kana output
+		**FIXED** Problems with newline
+			-At the start of a newline succeeding character skips to another newline
+			-Affects all text fields
+		Resizing the window 
+			-Maximizing the window resizes to desktop resolution, but doesn't center the window (clicking maximize again centers the window)
+			-Text is out of position when resizing to smaller resolution
+*/
+
+/*
+	CONTENTS
+		Static member declaration 	<Declaration of function prototypes, threading structures, and mutexes>
+		Main function declaration
+		User-set parameters 		<Variables set directly or indirectly by the user>
+		Resource loading
+			Font loading
+		Text objects				<Objects used to display text>
+			Input object
+			Output object
+			Menu objects
+			Bottom text object
+		Graphics objects			<Objects used to display components of the GUI>
+			Input text field
+			Output text field
+			Menu buttons and submenus
+		GUI window declaration
+		Thread objects				<Structure reference assignment and thread constructors>
+		GUI loop start				<Main loop of the program (Game loop) -- Uses a sleep function>
+			Event loop				<Event detection>
+			Variable updates		<Updates to variable assignments>
+		Function definitions
+			Hiragana				<Takes sf::String input and returns sf::String containing hiragana>
+			Katakana				<Takes sf::String input and returns sf::String containing katakana>
+			Concatenate				<Takes structure of I/O references and uses toHiragana()/toKatakana() to modify sf::String output>
+			Kana backspace			<When backspace event is triggered, takes structure of I/O references to erase last character of sf::String output>
+			Render drawables		<Loop that draws all components of the GUI -- Uses a sleep function>
+			Save window				<Renders a seperate window to save output string to a text file>
+			ToUTF8					<For use in Save window function -- converts sf::String to std::string capable of std::cout>
+*/

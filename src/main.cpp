@@ -1,63 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
-	THINGS TO DO EVENTUALLY
-		Add menu capabilities
-			-Add keyboard shortcuts for menu options
-			-Adjustable text size
-			-Enable copying text to clipboard (copy/paste)
-			-An "about" option/authoring information window
-			-Manage settings/config files
-		Make kana conversion output to stringin (same field for input/output)
-		Implement vertical window scrolling (figure it out)
-		Separate components between files (headers, DLLs)
-*/
-
-/*
-	KNOWN BUGS
-		Problems with 'n' character
-			-Typing a legitimate single letter character after 'n' results in that character having no output
-			-Affects kana output
-		**FIXED** Problems with newline
-			-At the start of a newline succeeding character skips to another newline
-			-Affects all text fields
-		Resizing the window 
-			-Maximizing the window resizes to desktop resolution, but doesn't center the window (clicking maximize again centers the window)
-			-Text is out of position when resizing to smaller resolution
-*/
-
-/*
-	CONTENTS
-		Static member declaration 	<Declaration of function prototypes, threading structures, and mutexes>
-		Main function declaration
-		User-set parameters 		<Variables set directly or indirectly by the user>
-		Resource loading
-			Font loading
-		Text objects				<Objects used to display text>
-			Input object
-			Output object
-			Menu objects
-			Bottom text object
-		Graphics objects			<Objects used to display components of the GUI>
-			Input text field
-			Output text field
-			Menu buttons and submenus
-		GUI window declaration
-		Thread objects				<Structure reference assignment and thread constructors>
-		GUI loop start				<Main loop of the program (Game loop) -- Uses a sleep function>
-			Event loop				<Event detection>
-			Variable updates		<Updates to variable assignments>
-		Function definitions
-			Hiragana				<Takes sf::String input and returns sf::String containing hiragana>
-			Katakana				<Takes sf::String input and returns sf::String containing katakana>
-			Concatenate				<Takes structure of I/O references and uses toHiragana()/toKatakana() to modify sf::String output>
-			Kana backspace			<When backspace event is triggered, takes structure of I/O references to erase last character of sf::String output>
-			Render drawables		<Loop that draws all components of the GUI -- Uses a sleep function>
-			Save window				<Renders a seperate window to save output string to a text file>
-			ToUTF8					<For use in Save window function -- converts sf::String to std::string capable of std::cout>
-*/
-
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 // SFML
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -75,11 +15,7 @@
 #include <stdexcept>	// For standard exceptions
 
 // Local
-<<<<<<< HEAD
 #include "../include/icon.h"
-=======
-#include "../../lib/icon.h"
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 
 /* MS Windows
 // Linking libraries
@@ -136,10 +72,7 @@ struct renderVariables
 	sf::Text *BottomText;
 };
 
-<<<<<<< HEAD
 // Function declarations
-=======
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 sf::String toHiragana (sf::String InputString);			// Accepts input (stringin) and returns sf::String with corresponding kana
 sf::String toKatakana (sf::String InputString);
 void concatenateKana (threadVariables variablestruct);	// Concatenates input to stringout if stringin is not NULL
@@ -156,10 +89,7 @@ std::string to_std_string(const sf::String& original);	// Takes sf::String (UTF-
 // Replaces main() to run without console
 int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszArgument, int nCmdShow)
 */
-<<<<<<< HEAD
 
-=======
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 int main()
 {
 
@@ -188,21 +118,13 @@ int main()
 // **************************** FONT LOADING ********************************
 	
 	sf::Font arial;
-<<<<<<< HEAD
 	if (!arial.loadFromFile("../resources/arial.ttf"))
-=======
-	if (!arial.loadFromFile("../../resources/ARIALUNI.TTF"))
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	{
 		return -1;
 	}
 	
 	sf::Font mangal;
-<<<<<<< HEAD
 	if (!mangal.loadFromFile("../resources/mangal.ttf"))
-=======
-	if (!mangal.loadFromFile("../../resources/mangal.ttf"))
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	{
 		return -1;
 	}
@@ -290,11 +212,7 @@ int main()
 // *********************** BOTTOM TEXT OBJECT *******************************
 	
 		// Disclaimer
-<<<<<<< HEAD
 		sf::Text bottomtext("Work in progress. Maintained by dseguin @ github.com.", arial, 10);
-=======
-		sf::Text bottomtext("Work in progress. Maintained by David Seguin.", arial, 10);
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 		bottomtext.setColor(sf::Color::Black);
 		sf::FloatRect bottomtextbounds = bottomtext.getGlobalBounds();
 		bottomtext.setPosition( (userResolutionX - bottomtextbounds.width - 2), (userResolutionY - bottomtextbounds.height - 5) );
@@ -396,14 +314,7 @@ int main()
 //   ---   ---   ---   -  GUI WINDOW DECLARATION  -   ---   ---   ---   ---
 // --------------------------------------------------------------------------
 
-<<<<<<< HEAD
-		/* MS Windows
 		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" );
-		*/
-		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" , sf::Style::Close);
-=======
-		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" );
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	
 		gui.setIcon ( kana_icon.width,  kana_icon.height,  kana_icon.pixel_data );
 	
@@ -480,10 +391,6 @@ int main()
 			
 			while (gui.pollEvent(useraction))
 			{
-<<<<<<< HEAD
-				/* MS Windows (broken on linux)
-=======
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 				// Resize event (updates resolution variables)
 				if (useraction.type == sf::Event::Resized)
 				{
@@ -494,11 +401,6 @@ int main()
 					outputStorage = stringout;
 					gui.close();
 				}
-<<<<<<< HEAD
-				*/
-
-=======
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 				// Close button event
 				if (useraction.type == sf::Event::Closed)
 				{
@@ -3542,11 +3444,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 {
 	sf::RenderWindow saveWindow ( sf::VideoMode( 500 , 200 ) , "Save to text file" , sf::Style::Titlebar );
 	
-<<<<<<< HEAD
 	sf::Text description("Input the path for the file you would like to save to.\n\nExample:\n$HOME/Documents/example.txt", font, 12);
-=======
-	sf::Text description("Input the path for the file you would like to save to.\n\nExample:\nC:/Users/My Name/Documents/example.txt", font, 12);
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	description.setColor(sf::Color::Black);
 	description.setPosition( 5, 5 );
 	
@@ -3556,11 +3454,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	filepathfield.setOutlineThickness(1);
 	filepathfield.setOutlineColor(sf::Color(200, 200, 200));
 	
-<<<<<<< HEAD
 	sf::String filepath = "$HOME/Documents/Untitled.txt";
-=======
-	sf::String filepath = "%USERPROFILE%/Documents/Kana/Untitled.txt";
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	
 	sf::Text filepathtext(filepath, font, 12);
 	filepathtext.setColor(sf::Color::Black);
@@ -3616,11 +3510,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	bool openfilesuccess = true;
 	
 	sf::String defaultpath;
-<<<<<<< HEAD
 
 	/* MS Windows (backslash shenanigans)
-=======
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	// String containing file path
 	TCHAR filepath_ptr[MAX_PATH];
 	if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
@@ -3649,10 +3540,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 		errorstring = "Error: Folder path is invalid or folder could not be created.";
 		openfilesuccess = false;
 	}
-<<<<<<< HEAD
 	*/
-=======
->>>>>>> 51b2c00542538950297013f958a2c7962adddc70
 	
 	while (saveWindow.isOpen())
 	{
