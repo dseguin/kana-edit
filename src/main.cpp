@@ -128,13 +128,13 @@ int main()
 // **************************** FONT LOADING ********************************
 	
 	sf::Font arial;
-	if (!arial.loadFromFile("../resources/arial.ttf"))
+	if (!arial.loadFromFile(FONT_ARIAL))
 	{
 		return -1;
 	}
 	
 	sf::Font mangal;
-	if (!mangal.loadFromFile("../resources/mangal.ttf"))
+	if (!mangal.loadFromFile(FONT_MANGAL))
 	{
 		return -1;
 	}

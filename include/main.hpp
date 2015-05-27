@@ -18,6 +18,7 @@
 
 // Local
 #include "../include/icon.h"
+#include "../include/defines.h"
 
 /* MS Windows
 // Linking libraries
