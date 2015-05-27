@@ -12,6 +12,7 @@ echo "" | tee -a autodefine.log
 CHANGED=0
 
 # change to absolute path
+# FONT_MANGAL
 if ! grep -rl /resources/mangal include/ >/dev/null ; then
 
 	echo " WARNING: Replacing FONT_MANGAL with $DIR/resources/mangal.ttf." | tee -a autodefine.log
@@ -22,7 +23,7 @@ if ! grep -rl /resources/mangal include/ >/dev/null ; then
 
 fi
 
-
+# FONT_ARIAL
 if ! grep -rl /resources/arial include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing FONT_ARIAL with $DIR/resources/arial.ttf." | tee -a autodefine.log
@@ -33,6 +34,16 @@ if ! grep -rl /resources/arial include/ >/dev/null ; then
 	
 fi
 
+# DEFAULT_SAVE_PATH
+if grep -rl '$HOME'/Documents include/ >/dev/null ; then
+	
+	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
+
+	grep -rl '$HOME'/Documents include/ | xargs sed -i 's~$HOME/Documents~'$HOME'/Documents~' | tee -a autodefine.log
+
+	CHANGED=1
+	
+fi
 
 if [ $CHANGED = 1 ] ; then
 

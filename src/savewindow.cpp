@@ -5,7 +5,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 {
 	sf::RenderWindow saveWindow ( sf::VideoMode( 500 , 200 ) , "Save to text file" , sf::Style::Titlebar );
 	
-	sf::Text description("Input the path for the file you would like to save to.\n\nExample:\n$HOME/Documents/example.txt", font, 12);
+	sf::String s_description("Input the path for the file you would like to save to.\n\nExample:\n");
+	s_description += DEFAULT_SAVE_PATH;
+	s_description += "/example.txt";
+	sf::Text description(s_description, font, 12);
 	description.setColor(sf::Color::Black);
 	description.setPosition( 5, 5 );
 	
@@ -15,7 +18,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	filepathfield.setOutlineThickness(1);
 	filepathfield.setOutlineColor(sf::Color(200, 200, 200));
 	
-	sf::String filepath = "$HOME/Documents/Untitled.txt";
+	sf::String filepath = DEFAULT_SAVE_PATH;
+	filepath += "/Untitled.txt";
 	
 	sf::Text filepathtext(filepath, font, 12);
 	filepathtext.setColor(sf::Color::Black);
@@ -70,7 +74,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	sf::Vector2i currentMousePosition(0,0);
 	bool openfilesuccess = true;
 	
-	sf::String defaultpath;
+	sf::String defaultpath = DEFAULT_SAVE_PATH;
+	defaultpath += "/Untitled.txt";
 
 	/* MS Windows (backslash shenanigans)
 	// String containing file path
