@@ -15,6 +15,8 @@ CFLAGS := -g # -Wall
 LIB := -lsfml-graphics -lsfml-window -lsfml-system
 INC := 
 
+all: | autodefine $(OBJECTS) $(TARGET)
+
 $(TARGET): $(OBJECTS)
 	@echo " Linking..."
 	@mkdir -p $(TARGETDIR)
@@ -24,8 +26,11 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
+autodefine:
+	@./autodefine.sh
+
 clean:
 	@echo " Cleaning..."; 
 	@echo " $(RM) -r $(BUILDDIR) $(TARGETDIR)"; $(RM) -r $(BUILDDIR) $(TARGETDIR)
 
-.PHONY: clean
+.PHONY: clean autodefine all
