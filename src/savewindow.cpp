@@ -73,6 +73,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	char mouselocation = '0';
 	sf::Vector2i currentMousePosition(0,0);
 	bool openfilesuccess = true;
+	bool saverequest = false;
 	
 	sf::String defaultpath = DEFAULT_SAVE_PATH;
 	defaultpath += "/Untitled.txt";
@@ -135,7 +136,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			{
 				if (saveaction.key.code == sf::Keyboard::Return)
 				{
-					saveWindow.close();
+					saverequest = true;
+					// saveWindow.close();
 				}
 			}
 		}
@@ -163,6 +165,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 		{
 			if (mouselocation == 's')
 			{
+				saverequest = true;
+				/*
 				// Using string conversion function instead of toAnsiString()
 				std::string tempout = to_std_string(filepath);
 				std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
@@ -186,6 +190,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 						openfilesuccess = false;
 					}
 				}
+				*/
 			}
 			else if (mouselocation == 'c')
 			{
@@ -195,6 +200,34 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			{
 				filepath = defaultpath;
 			}
+		}
+
+		if (saverequest)
+		{
+			// Using string conversion function instead of toAnsiString()
+			std::string tempout = to_std_string(filepath);
+			std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
+			if (!fileoutput.is_open())
+			{
+				errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
+				openfilesuccess = false;
+			}
+			else
+			{
+				// Uses string conversion function
+				fileoutput << to_std_string(OutputString);
+				try
+				{
+					fileoutput.close();
+					saveWindow.close();
+				}
+				catch (std::exception e)
+				{
+					errorstring = "Error: Problem closing filestream.";
+					openfilesuccess = false;
+				}
+			}
+			saverequest = false;
 		}
 		
 		filepathtext.setString(filepath);
