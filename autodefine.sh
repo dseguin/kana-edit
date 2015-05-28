@@ -45,6 +45,23 @@ if grep -rl '$HOME'/Documents include/ >/dev/null ; then
 	
 fi
 
+# MKDIR_PATH
+MKDIR="/bin/mkdir"
+MKDIRNEW=`command -v mkdir`
+if [ ! $MKDIR = $MKDIRNEW ] ; then
+	
+	if grep -rl $MKDIR include/ >/dev/null ; then
+
+		echo " WARNING: Replacing MKDIR_PATH with $MKDIRNEW ." | tee -a autodefine.log
+
+		grep -rl '/bin/mkdir' include/ | xargs sed -i 's~/bin/mkdir~'$MKDIRNEW'~' | tee -a autodefine.log
+
+		CHANGED=1
+
+	fi
+	
+fi
+
 if [ $CHANGED = 1 ] ; then
 
 	echo "" | tee -a autodefine.log

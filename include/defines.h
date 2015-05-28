@@ -6,5 +6,6 @@
 #define FONT_ARIAL "resources/arial.ttf"
 #define FONT_MANGAL "resources/mangal.ttf"
 #define DEFAULT_SAVE_PATH "$HOME/Documents"
+#define MKDIR_PATH "/bin/mkdir"
 
 #endif // DEFINES_H

@@ -1,4 +1,7 @@
 #include <fstream>
+#include <cerrno>
+#include <unistd.h>
+#include <fcntl.h>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
