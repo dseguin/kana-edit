@@ -5,7 +5,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 {
 	sf::RenderWindow saveWindow ( sf::VideoMode( 500 , 200 ) , "Save to text file" , sf::Style::Titlebar );
 	
-	sf::Text description("Input the path for the file you would like to save to.\n\nExample:\n$HOME/Documents/example.txt", font, 12);
+	sf::String s_description("Input the path for the file you would like to save to.\n\nExample:\n");
+	s_description += DEFAULT_SAVE_PATH;
+	s_description += "/example.txt";
+	sf::Text description(s_description, font, 12);
 	description.setColor(sf::Color::Black);
 	description.setPosition( 5, 5 );
 	
@@ -15,7 +18,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	filepathfield.setOutlineThickness(1);
 	filepathfield.setOutlineColor(sf::Color(200, 200, 200));
 	
-	sf::String filepath = "$HOME/Documents/Untitled.txt";
+	sf::String filepath = DEFAULT_SAVE_PATH;
+	filepath += "/Untitled.txt";
 	
 	sf::Text filepathtext(filepath, font, 12);
 	filepathtext.setColor(sf::Color::Black);
@@ -69,8 +73,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	char mouselocation = '0';
 	sf::Vector2i currentMousePosition(0,0);
 	bool openfilesuccess = true;
+	bool saverequest = false;
 	
-	sf::String defaultpath;
+	sf::String defaultpath = DEFAULT_SAVE_PATH;
+	defaultpath += "/Untitled.txt";
 
 	/* MS Windows (backslash shenanigans)
 	// String containing file path
@@ -130,7 +136,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			{
 				if (saveaction.key.code == sf::Keyboard::Return)
 				{
-					saveWindow.close();
+					saverequest = true;
+					// saveWindow.close();
 				}
 			}
 		}
@@ -158,6 +165,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 		{
 			if (mouselocation == 's')
 			{
+				saverequest = true;
+				/*
 				// Using string conversion function instead of toAnsiString()
 				std::string tempout = to_std_string(filepath);
 				std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
@@ -181,6 +190,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 						openfilesuccess = false;
 					}
 				}
+				*/
 			}
 			else if (mouselocation == 'c')
 			{
@@ -190,6 +200,142 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			{
 				filepath = defaultpath;
 			}
+		}
+
+		// Save to file
+		if (saverequest)
+		{
+			// Using string conversion function instead of toAnsiString()
+			std::string tempout = to_std_string(filepath);
+			std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
+			if (!fileoutput.is_open())
+			{
+				// Convoluted way of stripping off junk after the last '/'
+				sf::String s_temp = filepath;
+				sf::String s_out;
+				bool foundslash = false;
+				bool endofstring = false;
+				std::size_t tempsize = s_temp.getSize();
+				std::size_t index = tempsize + 1;
+				while ( index > 0 && !foundslash )
+				{
+					index -= 1;
+					if ( s_temp[index] == '/' )
+					{
+						foundslash = true;
+					}
+				}
+				if(foundslash)
+				{
+					for ( int i = 0 ; i < index ; i++ )
+					{
+						s_out += s_temp[i];
+					}
+					std::string s_mkdir = to_std_string(s_out);
+
+					char * ch = new char[s_mkdir.size() + 1];
+					std::copy(s_mkdir.begin(), s_mkdir.end(), ch);
+					ch[s_mkdir.size()] = '\0';
+
+					char *const mkdirargs[] = { "mkdir" , "-p" , ch , NULL };
+					
+					/*
+					// Fork -----------------
+					int execvreturn = 0;
+					pit_t pid = fork();
+					if(pid == 0)
+					{
+						execvreturn = execv( MKDIR_PATH , mkdirargs );
+						return 0;
+					}
+					else
+					{
+						wait();
+					}
+					// ----------------------
+					*/
+
+					// - Pipe - Fork - Execv -
+					int execvreturn = 0;
+					int execpipe[2];
+					pipe(execpipe);
+					fcntl(execpipe[1], F_SETFD, fcntl(execpipe[1], F_GETFD) | FD_CLOEXEC);
+					if(fork() == 0)
+					{
+						close(execpipe[0]);
+						execv( MKDIR_PATH , mkdirargs );
+						write(execpipe[1], &errno, sizeof(errno));
+						_exit(0);
+					}
+					else
+					{
+						close(execpipe[1]);
+						int childErrno;
+						if(read(execpipe[0], &childErrno, sizeof(childErrno)) == sizeof(childErrno))
+						{
+							// exec failed
+							execvreturn = -1;
+						}
+					}
+					// -----------------------
+
+					if ( execvreturn == -1 )
+					{
+						errorstring = "Error: Could not create directory ";
+						errorstring += s_out;
+						errorstring += ". Execv failed.";
+						openfilesuccess = false;
+					}
+					else
+					{
+						std::ofstream fileoutput2 ( tempout.c_str(), std::ios::app );
+						if (!fileoutput2.is_open())
+						{
+							errorstring = "Error: Problems creating directory ";
+							errorstring += s_out;
+							errorstring += ". Permission denied.";
+							openfilesuccess = false;
+						}
+						else
+						{
+							// Uses string conversion function
+							fileoutput << to_std_string(OutputString);
+							try
+							{
+								fileoutput.close();
+								saveWindow.close();
+							}
+							catch (std::exception e)
+							{
+								errorstring = "Error: Problem closing filestream.";
+								openfilesuccess = false;
+							}
+						}
+					}
+					delete[] ch;
+				}
+				else
+				{
+					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
+					openfilesuccess = false;
+				}
+			}
+			else
+			{
+				// Uses string conversion function
+				fileoutput << to_std_string(OutputString);
+				try
+				{
+					fileoutput.close();
+					saveWindow.close();
+				}
+				catch (std::exception e)
+				{
+					errorstring = "Error: Problem closing filestream.";
+					openfilesuccess = false;
+				}
+			}
+			saverequest = false;
 		}
 		
 		filepathtext.setString(filepath);
