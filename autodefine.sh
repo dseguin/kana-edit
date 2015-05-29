@@ -40,7 +40,7 @@ if grep -rl ../kana include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
 
-	grep -rl ../kana include/ | xargs sed -i 's~../kana~'$HOME'/Documents~' | tee -a autodefine.log
+	grep -rl ../kana include/ | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' | tee -a autodefine.log
 
 	CHANGED=1
 	
