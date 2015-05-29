@@ -5,6 +5,7 @@ echo " Running autodefine.sh" | tee autodefine.log
 
 # find absolute path
 DIR=$( cd "$( dirname "$0" )" && pwd )
+cd $DIR
 
 echo " kana-edit directory = $DIR" | tee -a autodefine.log
 echo "" | tee -a autodefine.log
@@ -35,11 +36,11 @@ if ! grep -rl /resources/arial include/ >/dev/null ; then
 fi
 
 # DEFAULT_SAVE_PATH
-if grep -rl '$HOME'/Documents include/ >/dev/null ; then
+if grep -rl ../kana include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
 
-	grep -rl '$HOME'/Documents include/ | xargs sed -i 's~$HOME/Documents~'$HOME'/Documents~' | tee -a autodefine.log
+	grep -rl ../kana include/ | xargs sed -i 's~../kana~'$HOME'/Documents~' | tee -a autodefine.log
 
 	CHANGED=1
 	
