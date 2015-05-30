@@ -93,7 +93,7 @@ am_kanaedit_OBJECTS = main.$(OBJEXT) backspace.$(OBJEXT) \
 	concatenate.$(OBJEXT) hiragana.$(OBJEXT) katakana.$(OBJEXT) \
 	savewindow.$(OBJEXT) stringconvert.$(OBJEXT)
 kanaedit_OBJECTS = $(am_kanaedit_OBJECTS)
-kanaedit_LDADD = $(LDADD)
+kanaedit_DEPENDENCIES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -235,7 +235,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 kanaedit_SOURCES = main.cpp backspace.cpp concatenate.cpp hiragana.cpp katakana.cpp savewindow.cpp stringconvert.cpp
-AM_LDFLAGS = -lsfml-window -lsfml-system -lsfml-graphics
+kanaedit_LDADD = -lsfml-window -lsfml-system -lsfml-graphics
 all: all-am
 
 .SUFFIXES:
@@ -506,6 +506,7 @@ uninstall-am:
 	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
 	uninstall-am
 
+# AM_CPPFLAGS = -I../include
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
