@@ -12,13 +12,13 @@ The top box is the input field--where input text is displayed, and the lower box
 
 <img src="resources/screenshot02.png">
 
-The program uses <a href="http://www.sfml-dev.org/">SFML</a> as a display interface. Future updates may make use of SFML's other features, such as sound or networking.
+The program uses <a href="http://www.sfml-dev.org/">SFML</a> as a display interface. Future updates may make use of SFML's other features, such as sound or networking. Currently, only linux is supported, but a Windows build is in the works.
 
 # Dependencies
 Here's a list of what you'll need to build kana-edit:
 - sfml-dev >=2.0
 - g++
-- GNU make
+- GNU autotools (autoconf, automake, Make)
 
 Some linux machines don't come with unicode support, so make sure your system can display characters within the <a href="https://en.wikipedia.org/wiki/Hiragana_%28Unicode_block%29">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana_%28Unicode_block%29">katakana</a> blocks.
 
@@ -49,10 +49,10 @@ $ src/kanaedit
 
 # Troubleshooting
 The most common problem relates to the define paths in <a href="include/defines.h">include/defines.h</a>. The autodefine.sh will handle this in most cases, but it may be necessary to adjust these yourself.
-- FONT\_ARIAL : This defines the path to resources/arial.ttf
-- FONT\_MANGAL : This defines the path to resources/mangal.ttf
-- DEFAULT\_SAVE\_PATH : This defines the folder where documents are saved by default
-- MKDIR\_PATH : This defines the path to the mkdir executable (run 'whereis mkdir' to find it)
+- `FONT_ARIAL` : This defines the path to resources/arial.ttf
+- `FONT_MANGAL` : This defines the path to resources/mangal.ttf
+- `DEFAULT_SAVE_PATH` : This defines the folder where documents are saved by default
+- `MKDIR_PATH` : This defines the path to the mkdir executable (run 'whereis mkdir' to find it)
 
 These should be absolute paths to guarantee that the program will run from any working directory.
 
