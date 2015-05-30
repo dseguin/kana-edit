@@ -166,31 +166,6 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			if (mouselocation == 's')
 			{
 				saverequest = true;
-				/*
-				// Using string conversion function instead of toAnsiString()
-				std::string tempout = to_std_string(filepath);
-				std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
-				if (!fileoutput.is_open())
-				{
-					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
-					openfilesuccess = false;
-				}
-				else
-				{
-					// Uses string conversion function
-					fileoutput << to_std_string(OutputString);
-					try
-					{
-						fileoutput.close();
-						saveWindow.close();
-					}
-					catch (std::exception e)
-					{
-						errorstring = "Error: Problem closing filestream.";
-						openfilesuccess = false;
-					}
-				}
-				*/
 			}
 			else if (mouselocation == 'c')
 			{
@@ -210,6 +185,39 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
 			if (!fileoutput.is_open())
 			{
+				
+				// MS Windows (backslash shenanigans)
+				#ifdef _WIN32
+				// String containing file path
+				TCHAR filepath_ptr[MAX_PATH];
+				if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
+				{
+					filepath = filepath_ptr;
+					bool endofstring = false;
+					std::size_t slashpos = 0;
+					while (!endofstring)
+					{
+						slashpos = filepath.find("\\");
+						if (slashpos == sf::String::InvalidPos)
+						{
+							endofstring = true;
+						}
+						else
+						{
+							filepath.erase(slashpos, 1);
+							filepath.insert(slashpos, "/");
+						}
+					}
+					filepath += "/Untitled.txt";
+				}
+				else
+				{
+					errorstring = "Error: Folder path is invalid or folder could not be created.";
+					openfilesuccess = false;
+				}
+				//
+				
+				#else
 				// Convoluted way of stripping off junk after the last '/'
 				sf::String s_temp = filepath;
 				sf::String s_out;
@@ -239,22 +247,6 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 
 					char *const mkdirargs[] = { "mkdir" , "-p" , ch , NULL };
 					
-					/*
-					// Fork -----------------
-					int execvreturn = 0;
-					pit_t pid = fork();
-					if(pid == 0)
-					{
-						execvreturn = execv( MKDIR_PATH , mkdirargs );
-						return 0;
-					}
-					else
-					{
-						wait();
-					}
-					// ----------------------
-					*/
-
 					// - Pipe - Fork - Execv -
 					int execvreturn = 0;
 					int execpipe[2];
@@ -319,6 +311,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
 					openfilesuccess = false;
 				}
+				#endif
 			}
 			else
 			{
