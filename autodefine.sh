@@ -1,10 +1,11 @@
 #! /bin/sh
 
-echo ""
-echo " Running autodefine.sh" | tee autodefine.log
-
 # find absolute path
 DIR=$( cd "$( dirname "$0" )" && pwd )
+cd $DIR
+
+echo ""
+echo " Running autodefine.sh" | tee autodefine.log
 
 echo " kana-edit directory = $DIR" | tee -a autodefine.log
 echo "" | tee -a autodefine.log
@@ -35,11 +36,11 @@ if ! grep -rl /resources/arial include/ >/dev/null ; then
 fi
 
 # DEFAULT_SAVE_PATH
-if grep -rl '$HOME'/Documents include/ >/dev/null ; then
+if grep -rl ../kana include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
 
-	grep -rl '$HOME'/Documents include/ | xargs sed -i 's~$HOME/Documents~'$HOME'/Documents~' | tee -a autodefine.log
+	grep -rl ../kana include/ | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' | tee -a autodefine.log
 
 	CHANGED=1
 	
@@ -50,7 +51,7 @@ MKDIR="/bin/mkdir"
 MKDIRNEW=`command -v mkdir`
 if [ ! $MKDIR = $MKDIRNEW ] ; then
 	
-	if grep -rl $MKDIR include/ >/dev/null ; then
+	if ! grep -rl $MKDIRNEW include/ >/dev/null ; then
 
 		echo " WARNING: Replacing MKDIR_PATH with $MKDIRNEW ." | tee -a autodefine.log
 
