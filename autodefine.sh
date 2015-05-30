@@ -1,11 +1,11 @@
 #! /bin/sh
 
-echo ""
-echo " Running autodefine.sh" | tee autodefine.log
-
 # find absolute path
 DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $DIR
+
+echo ""
+echo " Running autodefine.sh" | tee autodefine.log
 
 echo " kana-edit directory = $DIR" | tee -a autodefine.log
 echo "" | tee -a autodefine.log
@@ -51,7 +51,7 @@ MKDIR="/bin/mkdir"
 MKDIRNEW=`command -v mkdir`
 if [ ! $MKDIR = $MKDIRNEW ] ; then
 	
-	if grep -rl $MKDIR include/ >/dev/null ; then
+	if ! grep -rl $MKDIRNEW include/ >/dev/null ; then
 
 		echo " WARNING: Replacing MKDIR_PATH with $MKDIRNEW ." | tee -a autodefine.log
 
