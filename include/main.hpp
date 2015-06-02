@@ -2,6 +2,10 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#ifdef _WIN32
+	#include <Windows.h>
+#endif
+
 // Local
 #include "../include/icon.h"
 #include "../include/defines.h"

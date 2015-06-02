@@ -78,37 +78,6 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	sf::String defaultpath = DEFAULT_SAVE_PATH;
 	defaultpath += "/Untitled.txt";
 
-	/* MS Windows (backslash shenanigans)
-	// String containing file path
-	TCHAR filepath_ptr[MAX_PATH];
-	if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
-	{
-		filepath = filepath_ptr;
-		bool endofstring = false;
-		std::size_t slashpos = 0;
-		while (!endofstring)
-		{
-			slashpos = filepath.find("\\");
-			if (slashpos == sf::String::InvalidPos)
-			{
-				endofstring = true;
-			}
-			else
-			{
-				filepath.erase(slashpos, 1);
-				filepath.insert(slashpos, "/");
-			}
-		}
-		filepath += "/Untitled.txt";
-		defaultpath = filepath;
-	}
-	else
-	{
-		errorstring = "Error: Folder path is invalid or folder could not be created.";
-		openfilesuccess = false;
-	}
-	*/
-	
 	while (saveWindow.isOpen())
 	{
 		while (saveWindow.pollEvent(saveaction))
@@ -188,6 +157,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 				
 				// MS Windows (backslash shenanigans)
 				#ifdef _WIN32
+				/* Temporary
 				// String containing file path
 				TCHAR filepath_ptr[MAX_PATH];
 				if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
@@ -216,6 +186,9 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					openfilesuccess = false;
 				}
 				//
+				*/
+				errorstring = "Error: Folder path is invalid or folder could not be created.";
+				openfilesuccess = false;
 				
 				#else
 				// Convoluted way of stripping off junk after the last '/'
