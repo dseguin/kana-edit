@@ -1,7 +1,11 @@
 #include <fstream>
 #include <cerrno>
-#include <unistd.h>
-#include <fcntl.h>
+
+#ifdef _WIN32
+#else
+	#include <unistd.h>
+	#include <fcntl.h>
+#endif
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
