@@ -5,7 +5,11 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 {
 	sf::RenderWindow saveWindow ( sf::VideoMode( 500 , 200 ) , "Save to text file" , sf::Style::Titlebar );
 	
+	#ifdef _WIN32
+	sf::String s_description("Input the path for the file you would like to save to.\nPlease use forward slashes for path names (\"/\").\n\nExample:\n");
+	#else
 	sf::String s_description("Input the path for the file you would like to save to.\n\nExample:\n");
+	#endif
 	s_description += DEFAULT_SAVE_PATH;
 	s_description += "/example.txt";
 	sf::Text description(s_description, font, 12);
@@ -154,9 +158,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
 			if (!fileoutput.is_open())
 			{
-				
 				// MS Windows (backslash shenanigans)
-				#ifdef _WIN32
 				/* Temporary
 				// String containing file path
 				TCHAR filepath_ptr[MAX_PATH];
@@ -187,10 +189,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 				}
 				//
 				*/
-				errorstring = "Error: Folder path is invalid or folder could not be created.";
-				openfilesuccess = false;
 				
-				#else
 				// Convoluted way of stripping off junk after the last '/'
 				sf::String s_temp = filepath;
 				sf::String s_out;
@@ -214,6 +213,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					}
 					std::string s_mkdir = to_std_string(s_out);
 
+					#ifdef _WIN32
+					int execvreturn = _mkdir(s_mkdir);
+
+					#else // Assume linux
 					char * ch = new char[s_mkdir.size() + 1];
 					std::copy(s_mkdir.begin(), s_mkdir.end(), ch);
 					ch[s_mkdir.size()] = '\0';
@@ -244,11 +247,18 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					}
 					// -----------------------
 
+					delete[] ch;
+					#endif
+
 					if ( execvreturn == -1 )
 					{
 						errorstring = "Error: Could not create directory ";
 						errorstring += s_out;
+						#ifdef _WIN32
+						errorstring += ". _mkdir cannot create directories recursively.";
+						#else
 						errorstring += ". Execv failed.";
+						#endif
 						openfilesuccess = false;
 					}
 					else
@@ -277,14 +287,12 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 							}
 						}
 					}
-					delete[] ch;
 				}
 				else
 				{
 					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
 					openfilesuccess = false;
 				}
-				#endif
 			}
 			else
 			{

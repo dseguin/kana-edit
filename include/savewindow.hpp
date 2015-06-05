@@ -2,6 +2,7 @@
 #include <cerrno>
 
 #ifdef _WIN32
+	#include <direct.h>
 #else
 	#include <unistd.h>
 	#include <fcntl.h>
