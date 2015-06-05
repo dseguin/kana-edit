@@ -184,14 +184,14 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					}
 					std::string s_mkdir = to_std_string(s_out);
 
-					#ifdef _WIN32
-					int execvreturn = _mkdir(s_mkdir);
-
-					#else // Assume linux
 					char * ch = new char[s_mkdir.size() + 1];
 					std::copy(s_mkdir.begin(), s_mkdir.end(), ch);
 					ch[s_mkdir.size()] = '\0';
 
+					#ifdef _WIN32
+					int execvreturn = _mkdir(ch);
+
+					#else // Assume linux
 					char *const mkdirargs[] = { "mkdir" , "-p" , ch , NULL };
 					
 					// - Pipe - Fork - Execv -
@@ -217,9 +217,8 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 						}
 					}
 					// -----------------------
-
-					delete[] ch;
 					#endif
+					delete[] ch;
 
 					if ( execvreturn == -1 )
 					{
