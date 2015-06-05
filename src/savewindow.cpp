@@ -105,14 +105,17 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					saveWindow.close();
 				}
 			}
+			// Return key causes strange bug
+			// (creates directory, but prints error message)
+			/*
 			if (saveaction.type == sf::Event::KeyPressed)
 			{
 				if (saveaction.key.code == sf::Keyboard::Return)
 				{
 					saverequest = true;
-					// saveWindow.close();
 				}
 			}
+			*/
 		}
 		
 		currentMousePosition = usermouse.getPosition(saveWindow);
@@ -158,38 +161,6 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
 			if (!fileoutput.is_open())
 			{
-				// MS Windows (backslash shenanigans)
-				/* Temporary
-				// String containing file path
-				TCHAR filepath_ptr[MAX_PATH];
-				if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
-				{
-					filepath = filepath_ptr;
-					bool endofstring = false;
-					std::size_t slashpos = 0;
-					while (!endofstring)
-					{
-						slashpos = filepath.find("\\");
-						if (slashpos == sf::String::InvalidPos)
-						{
-							endofstring = true;
-						}
-						else
-						{
-							filepath.erase(slashpos, 1);
-							filepath.insert(slashpos, "/");
-						}
-					}
-					filepath += "/Untitled.txt";
-				}
-				else
-				{
-					errorstring = "Error: Folder path is invalid or folder could not be created.";
-					openfilesuccess = false;
-				}
-				//
-				*/
-				
 				// Convoluted way of stripping off junk after the last '/'
 				sf::String s_temp = filepath;
 				sf::String s_out;
@@ -290,7 +261,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 				}
 				else
 				{
-					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
+					errorstring = "Error: Could not open file path. The path is not parsable or leads to a directory.";
 					openfilesuccess = false;
 				}
 			}
