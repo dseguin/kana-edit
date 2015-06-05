@@ -244,10 +244,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 						else
 						{
 							// Uses string conversion function
-							fileoutput << to_std_string(OutputString);
+							fileoutput2 << to_std_string(OutputString);
 							try
 							{
-								fileoutput.close();
+								fileoutput2.close();
 								saveWindow.close();
 							}
 							catch (std::exception e)
