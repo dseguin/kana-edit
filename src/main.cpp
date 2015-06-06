@@ -436,7 +436,7 @@ int main()
 						// Backspace event
 						if (useraction.text.unicode == 8 && stringin.getSize() > 0)
 						{
-							if (stringout[(stringout.getSize() - 1)] == '\n')
+							if (stringout[(stringout.getSize() - 1)] == '\n' && stringin[(stringin.getSize() - 1)] == '\n')
 							{
 								stringout.erase((stringout.getSize() - 1), 1);
 							}
