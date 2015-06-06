@@ -37,12 +37,14 @@
 // ---   ---   ---   ---   -  MAIN FUNCTION  -   ---   ---   ---   ---   ---
 // --------------------------------------------------------------------------
 
-/* MS Windows
+// MS Windows
+#ifdef _WIN32
 // Replaces main() to run without console
 int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszArgument, int nCmdShow)
-*/
-
+//
+#else
 int main()
+#endif
 {
 
 // --------------------------------------------------------------------------
@@ -266,11 +268,14 @@ int main()
 //   ---   ---   ---   -  GUI WINDOW DECLARATION  -   ---   ---   ---   ---
 // --------------------------------------------------------------------------
 
-		/* MS Windows
+		// MS Windows
+		#ifdef _WIN32
 		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" );
-		*/
+		//
+		#else
 		sf::RenderWindow gui ( sf::VideoMode( userResolutionX , userResolutionY ) , "Simple Kana Editor" , sf::Style::Close );
-		
+		#endif
+
 		gui.setIcon ( kana_icon.width,  kana_icon.height,  kana_icon.pixel_data );
 	
 // --------------------------------------------------------------------------
@@ -354,7 +359,8 @@ int main()
 			{
 				renderMutex.unlock();
 
-				/* MS Windows
+				// MS Windows
+				#ifdef _WIN32
 				// Resize event (updates resolution variables)
 				if (useraction.type == sf::Event::Resized)
 				{
@@ -365,7 +371,8 @@ int main()
 					outputStorage = stringout;
 					gui.close();
 				}
-				*/
+				#endif
+				//
 
 				// Close button event
 				if (useraction.type == sf::Event::Closed)

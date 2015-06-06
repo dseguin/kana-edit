@@ -28,8 +28,13 @@
 *.app
 
 # Ignore the build and lib dirs
-#build/*
 lib/*
 
 # Ignore any executables
 bin/*
+
+# Ignore Vi backup files
+*.cpp~
+*.hpp~
+*.h~
+*.sh~

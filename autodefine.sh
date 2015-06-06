@@ -36,11 +36,11 @@ if ! grep -rl /resources/arial include/ >/dev/null ; then
 fi
 
 # DEFAULT_SAVE_PATH
-if grep -rl ../kana include/ >/dev/null ; then
+if grep -Frl ../kana include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
 
-	grep -rl ../kana include/ | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' | tee -a autodefine.log
+	grep -Frl ../kana include/ | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' | tee -a autodefine.log
 
 	CHANGED=1
 	

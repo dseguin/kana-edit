@@ -1,3 +1,36 @@
+/****************************************************************************
+ *
+ * Simple Kana Editor
+ *
+ * Author: David Seguin (dseguin @ github.com)
+ * Date: May 2015
+ * Git repo: https://github.com/dseguin/kana-edit.git
+ *
+ * Description:
+ *      kana-edit is a simple editor for katakana and hiragana. You can type
+ *  in standard romanji (english representations of kana characters) and it
+ *  will "translate" what you type *on the fly*.
+ *      The top box is the input field--where input text is displayed, and
+ *  the lower box is the output field--where the processed kana is displayed.
+ *  In the top left is an options menu, where you can...
+ *  
+ *          - Switch between Katakana mode and Hiragana mode
+ *          - Clear the screen (both text fields)
+ *          - Save what is in the output field to a unicode text file
+ *          - Exit the program
+ *
+ *      The program uses SFML as a display interface. Future updates may
+ *  make use of SFML's other features, such as sound or networking.
+ *
+ * Note to developers:
+ *      You're free to do whatever you want with this code. The kana source
+ *  could make a handy library if you're working with unicode characters.
+ *  However, some of the code is very long, and there's a complicated series
+ *  of 'if' statements powering the processing of text. Be warned.
+ *
+ *
+ ***************************************************************************/
+
 #include "../include/savewindow.hpp"
 
 // Creates and draws save window
@@ -5,7 +38,11 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 {
 	sf::RenderWindow saveWindow ( sf::VideoMode( 500 , 200 ) , "Save to text file" , sf::Style::Titlebar );
 	
+	#ifdef _WIN32
+	sf::String s_description("Input the path for the file you would like to save to.\nPlease use forward slashes for path names (\"/\").\n\nExample:\n");
+	#else
 	sf::String s_description("Input the path for the file you would like to save to.\n\nExample:\n");
+	#endif
 	s_description += DEFAULT_SAVE_PATH;
 	s_description += "/example.txt";
 	sf::Text description(s_description, font, 12);
@@ -78,37 +115,6 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	sf::String defaultpath = DEFAULT_SAVE_PATH;
 	defaultpath += "/Untitled.txt";
 
-	/* MS Windows (backslash shenanigans)
-	// String containing file path
-	TCHAR filepath_ptr[MAX_PATH];
-	if ( SUCCEEDED( SHGetFolderPath (NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, filepath_ptr) ) )
-	{
-		filepath = filepath_ptr;
-		bool endofstring = false;
-		std::size_t slashpos = 0;
-		while (!endofstring)
-		{
-			slashpos = filepath.find("\\");
-			if (slashpos == sf::String::InvalidPos)
-			{
-				endofstring = true;
-			}
-			else
-			{
-				filepath.erase(slashpos, 1);
-				filepath.insert(slashpos, "/");
-			}
-		}
-		filepath += "/Untitled.txt";
-		defaultpath = filepath;
-	}
-	else
-	{
-		errorstring = "Error: Folder path is invalid or folder could not be created.";
-		openfilesuccess = false;
-	}
-	*/
-	
 	while (saveWindow.isOpen())
 	{
 		while (saveWindow.pollEvent(saveaction))
@@ -132,14 +138,17 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					saveWindow.close();
 				}
 			}
+			// Return key causes strange bug
+			// (creates directory, but prints error message)
+			/*
 			if (saveaction.type == sf::Event::KeyPressed)
 			{
 				if (saveaction.key.code == sf::Keyboard::Return)
 				{
 					saverequest = true;
-					// saveWindow.close();
 				}
 			}
+			*/
 		}
 		
 		currentMousePosition = usermouse.getPosition(saveWindow);
@@ -166,31 +175,6 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 			if (mouselocation == 's')
 			{
 				saverequest = true;
-				/*
-				// Using string conversion function instead of toAnsiString()
-				std::string tempout = to_std_string(filepath);
-				std::ofstream fileoutput ( tempout.c_str(), std::ios::app );
-				if (!fileoutput.is_open())
-				{
-					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
-					openfilesuccess = false;
-				}
-				else
-				{
-					// Uses string conversion function
-					fileoutput << to_std_string(OutputString);
-					try
-					{
-						fileoutput.close();
-						saveWindow.close();
-					}
-					catch (std::exception e)
-					{
-						errorstring = "Error: Problem closing filestream.";
-						openfilesuccess = false;
-					}
-				}
-				*/
 			}
 			else if (mouselocation == 'c')
 			{
@@ -237,24 +221,12 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					std::copy(s_mkdir.begin(), s_mkdir.end(), ch);
 					ch[s_mkdir.size()] = '\0';
 
+					#ifdef _WIN32
+					int execvreturn = _mkdir(ch);
+
+					#else // Assume linux
 					char *const mkdirargs[] = { "mkdir" , "-p" , ch , NULL };
 					
-					/*
-					// Fork -----------------
-					int execvreturn = 0;
-					pit_t pid = fork();
-					if(pid == 0)
-					{
-						execvreturn = execv( MKDIR_PATH , mkdirargs );
-						return 0;
-					}
-					else
-					{
-						wait();
-					}
-					// ----------------------
-					*/
-
 					// - Pipe - Fork - Execv -
 					int execvreturn = 0;
 					int execpipe[2];
@@ -278,12 +250,18 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 						}
 					}
 					// -----------------------
+					#endif
+					delete[] ch;
 
 					if ( execvreturn == -1 )
 					{
 						errorstring = "Error: Could not create directory ";
 						errorstring += s_out;
+						#ifdef _WIN32
+						errorstring += ". _mkdir cannot create directories recursively.";
+						#else
 						errorstring += ". Execv failed.";
+						#endif
 						openfilesuccess = false;
 					}
 					else
@@ -299,10 +277,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 						else
 						{
 							// Uses string conversion function
-							fileoutput << to_std_string(OutputString);
+							fileoutput2 << to_std_string(OutputString);
 							try
 							{
-								fileoutput.close();
+								fileoutput2.close();
 								saveWindow.close();
 							}
 							catch (std::exception e)
@@ -312,11 +290,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 							}
 						}
 					}
-					delete[] ch;
 				}
 				else
 				{
-					errorstring = "Error: Could not open file path. The folder does not exist or is not accessible.";
+					errorstring = "Error: Could not open file path. The path is not parsable or leads to a directory.";
 					openfilesuccess = false;
 				}
 			}
