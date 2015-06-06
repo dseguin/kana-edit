@@ -14,7 +14,33 @@ The top box is the input field--where input text is displayed, and the lower box
 
 The program uses <a href="http://www.sfml-dev.org/">SFML</a> as a display interface. Future updates may make use of SFML's other features, such as sound or networking. Currently, only linux is supported, but a Windows build is in the works.
 
-# Dependencies
+# Compiling on Windows
+Building kana-edit requires:
+- sfml libraries (>=2.0)
+- Visual Studio (or at least the visual c/c++ compiler)
+   - MinGW/g++ may work, remains untested.
+- git utility (optional)
+
+Use your git utility to clone this repository
+```
+> git clone https://github.com/dseguin/kana-edit.git
+```
+or simply download and extract the <a href="https://github.com/dseguin/kana-edit/archive/master.zip">latest version of the repo</a>. Make sure you also have the appropriate <a href="http://www.sfml-dev.org/download.php">SFML libraries</a>.
+
+Open a command prompt through your IDE to have the appropriate variables set. Change your directory to where you extracted or cloned the kana-edit repo:
+```
+> cd path/to/kana-edit
+```
+Now compile with:
+```
+> cl /EHsc src/*.cpp /Fekanaedit.exe /I<path/to/SFML/include> /link <path/to/SFML/lib>/sfml-graphics.lib <path/to/SFML/lib>/sfml-window.lib <path/to/SFML/lib>/sfml-system.lib
+```
+Then copy the appropriate .dlls from `<path/to/SFML/bin>` (system, graphics, window) to the folder containing the newly created kanaedit.exe. The .dlls need to be in the same directory for the program to run.
+
+# Compiling on Linux
+What follows are instructions for building kana-edit on Linux.
+
+### Dependencies
 Here's a list of what you'll need to build kana-edit:
 - sfml-dev >=2.0
 - g++
@@ -22,7 +48,7 @@ Here's a list of what you'll need to build kana-edit:
 
 Some linux machines don't come with unicode support, so make sure your system can display characters within the <a href="https://en.wikipedia.org/wiki/Hiragana_%28Unicode_block%29">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana_%28Unicode_block%29">katakana</a> blocks.
 
-# Build kana-edit
+### Build kana-edit
 To build kana-edit, make sure you have a fresh clone.
 ```
 $ git clone https://github.com/dseguin/kana-edit.git
@@ -47,7 +73,7 @@ $ make
 $ src/kanaedit
 ```
 
-# Troubleshooting
+# Troubleshooting (Linux)
 The most common problem relates to the define paths in <a href="include/defines.h">include/defines.h</a>. The autodefine.sh will handle this in most cases, but it may be necessary to adjust these yourself.
 - `FONT_ARIAL` : This defines the path to resources/arial.ttf
 - `FONT_MANGAL` : This defines the path to resources/mangal.ttf
