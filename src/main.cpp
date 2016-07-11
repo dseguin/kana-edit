@@ -71,14 +71,14 @@ int main()
 
 // **************************** FONT LOADING ********************************
 	
-	sf::Font arial;
-	if (!arial.loadFromFile(FONT_ARIAL))
+	sf::Font unifont;
+	if (!unifont.loadFromFile(FONT_UNIFONT))
 	{
 		return -1;
 	}
 	
-	sf::Font mangal;
-	if (!mangal.loadFromFile(FONT_MANGAL))
+	sf::Font dejavu;
+	if (!dejavu.loadFromFile(FONT_DEJAVU))
 	{
 		return -1;
 	}
@@ -100,7 +100,7 @@ int main()
 	
 		// Text input object
 		sf::Text textin;
-		textin.setFont(arial);
+		textin.setFont(unifont);
 		textin.setCharacterSize(userTextSize);
 		textin.setColor(sf::Color::Black);
 		textin.setPosition(30, 50);
@@ -117,7 +117,7 @@ int main()
 	
 		// Text output object
 		sf::Text textout;
-		textout.setFont(arial);
+		textout.setFont(unifont);
 		textout.setCharacterSize(userTextSize);
 		textout.setColor(sf::Color::Black);
 		textout.setPosition( 30, ((userResolutionY / 2) + 25) );
@@ -130,34 +130,34 @@ int main()
 // ************************* MENU TEXT OBJECTS ******************************
 	
 		// File menu option
-		sf::Text menu_file("Options", mangal, 12);
+		sf::Text menu_file("Options", dejavu, 12);
 		menu_file.setColor(sf::Color::Black);
 		menu_file.setPosition(5, 3);
 		sf::FloatRect menu_file_bounds = menu_file.getGlobalBounds();
 	
 		// File submenu option for switching between hiragana and katakana
-		sf::Text menu_file_switchkana(" ", mangal, 12);
+		sf::Text menu_file_switchkana(" ", dejavu, 12);
 
 		menu_file_switchkana.setColor(sf::Color::Black);
 		menu_file_switchkana.setPosition(5, 21);
 	
 		// File submenu option for clearing all text fields
-		sf::Text menu_file_clear("Clear all text", mangal, 12);
+		sf::Text menu_file_clear("Clear all text", dejavu, 12);
 		menu_file_clear.setColor(sf::Color::Black);
 		menu_file_clear.setPosition(5, 41);
 	
 		// File submenu option for saving stringout to text file
-		sf::Text menu_file_save("Save to text file", mangal, 12);
+		sf::Text menu_file_save("Save to text file", dejavu, 12);
 		menu_file_save.setColor(sf::Color::Black);
 		menu_file_save.setPosition(5, 61);
 	
 		// File submenu blank option (temporary)
-		sf::Text menu_file_blank("---   ---   ---", mangal, 12);
+		sf::Text menu_file_blank("---   ---   ---", dejavu, 12);
 		menu_file_blank.setColor(sf::Color::Black);
 		menu_file_blank.setPosition(5, 81);
 	
 		// File submenu option for Exit
-		sf::Text menu_file_exit("Exit", mangal, 12);
+		sf::Text menu_file_exit("Exit", dejavu, 12);
 		menu_file_exit.setColor(sf::Color::Black);
 		menu_file_exit.setPosition(5, 101);
 
@@ -166,7 +166,7 @@ int main()
 // *********************** BOTTOM TEXT OBJECT *******************************
 	
 		// Disclaimer
-		sf::Text bottomtext("Work in progress. Maintained by dseguin @ github.com.", arial, 10);
+		sf::Text bottomtext("Work in progress. Maintained by dseguin @ github.com.", unifont, 10);
 		bottomtext.setColor(sf::Color::Black);
 		sf::FloatRect bottomtextbounds = bottomtext.getGlobalBounds();
 		bottomtext.setPosition( (userResolutionX - bottomtextbounds.width - 2), (userResolutionY - bottomtextbounds.height - 5) );
@@ -499,7 +499,7 @@ int main()
 							}
 							else if (mouseInSubmenu == '3')
 							{
-								saveOutput(stringout, arial);
+								saveOutput(stringout, unifont);
 							}
 							else if (mouseInSubmenu == '5')
 							{

@@ -13,23 +13,23 @@ echo "" | tee -a autodefine.log
 CHANGED=0
 
 # change to absolute path
-# FONT_MANGAL
-if ! grep -rl /resources/mangal include/ >/dev/null ; then
+# FONT_DEJAVU
+if ! grep -rl /resources/dejavu include/ >/dev/null ; then
 
-	echo " WARNING: Replacing FONT_MANGAL with $DIR/resources/mangal.ttf." | tee -a autodefine.log
+	echo " WARNING: Replacing FONT_DEJAVU with $DIR/resources/dejavu.ttf." | tee -a autodefine.log
 	
-	grep -rl resources/mangal.ttf include/ 2>&1 | xargs sed -i "" -e 's~resources/mangal.ttf~'$DIR'/resources/mangal.ttf~' 2>&1 | tee -a autodefine.log
+	grep -rl resources/dejavu.ttf include/ 2>&1 | xargs sed -i "" -e 's~resources/dejavu.ttf~'$DIR'/resources/dejavu.ttf~' 2>&1 | tee -a autodefine.log
 
 	CHANGED=1
 
 fi
 
-# FONT_ARIAL
-if ! grep -rl /resources/arial include/ >/dev/null ; then
+# FONT_UNIFONT
+if ! grep -rl /resources/unifont include/ >/dev/null ; then
 	
-	echo " WARNING: Replacing FONT_ARIAL with $DIR/resources/arial.ttf." | tee -a autodefine.log
+	echo " WARNING: Replacing FONT_UNIFONT with $DIR/resources/unifont.ttf." | tee -a autodefine.log
 
-	grep -rl resources/arial.ttf include/ 2>&1 | xargs sed -i "" -e 's~resources/arial.ttf~'$DIR'/resources/arial.ttf~' 2>&1 | tee -a autodefine.log
+	grep -rl resources/unifont.ttf include/ 2>&1 | xargs sed -i "" -e 's~resources/unifont.ttf~'$DIR'/resources/unifont.ttf~' 2>&1 | tee -a autodefine.log
 
 	CHANGED=1
 	

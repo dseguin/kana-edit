@@ -3,8 +3,8 @@
 
 // Change these as necessary
 // (Use absolute paths where possible)
-#define FONT_ARIAL "resources/arial.ttf"
-#define FONT_MANGAL "resources/mangal.ttf"
+#define FONT_UNIFONT "resources/unifont.ttf"
+#define FONT_DEJAVU "resources/dejavu.ttf"
 #define DEFAULT_SAVE_PATH "../kana"
 #define MKDIR_PATH "/bin/mkdir"
 

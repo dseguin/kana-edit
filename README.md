@@ -82,8 +82,8 @@ $ src/kanaedit
 
 # Troubleshooting (Linux)
 The most common problem relates to the define paths in <a href="include/defines.h">include/defines.h</a>. The autodefine.sh will handle this in most cases, but it may be necessary to adjust these yourself.
-- `FONT_ARIAL` : This defines the path to resources/arial.ttf
-- `FONT_MANGAL` : This defines the path to resources/mangal.ttf
+- `FONT_UNIFONT` : This defines the path to resources/unifont.ttf
+- `FONT_DEJAVU` : This defines the path to resources/dejavu.ttf
 - `DEFAULT_SAVE_PATH` : This defines the folder where documents are saved by default
 - `MKDIR_PATH` : This defines the path to the mkdir executable (run 'whereis mkdir' to find it)
 
