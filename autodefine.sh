@@ -18,7 +18,7 @@ if ! grep -rl /resources/mangal include/ >/dev/null ; then
 
 	echo " WARNING: Replacing FONT_MANGAL with $DIR/resources/mangal.ttf." | tee -a autodefine.log
 	
-	grep -rl resources/mangal.ttf include/ | xargs sed -i 's~resources/mangal.ttf~'$DIR'/resources/mangal.ttf~' | tee -a autodefine.log
+	grep -rl resources/mangal.ttf include/ 2>&1 | xargs sed -i "" -e 's~resources/mangal.ttf~'$DIR'/resources/mangal.ttf~' 2>&1 | tee -a autodefine.log
 
 	CHANGED=1
 
@@ -29,7 +29,7 @@ if ! grep -rl /resources/arial include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing FONT_ARIAL with $DIR/resources/arial.ttf." | tee -a autodefine.log
 
-	grep -rl resources/arial.ttf include/ | xargs sed -i 's~resources/arial.ttf~'$DIR'/resources/arial.ttf~' | tee -a autodefine.log
+	grep -rl resources/arial.ttf include/ 2>&1 | xargs sed -i "" -e 's~resources/arial.ttf~'$DIR'/resources/arial.ttf~' 2>&1 | tee -a autodefine.log
 
 	CHANGED=1
 	
@@ -40,7 +40,7 @@ if grep -Frl ../kana include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
 
-	grep -Frl ../kana include/ | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' | tee -a autodefine.log
+	grep -Frl ../kana include/ 2>&1 | xargs sed -i "" -e 's~\.\./kana~'$HOME'/Documents~' 2>&1 | tee -a autodefine.log
 
 	CHANGED=1
 	
@@ -55,7 +55,7 @@ if [ ! $MKDIR = $MKDIRNEW ] ; then
 
 		echo " WARNING: Replacing MKDIR_PATH with $MKDIRNEW ." | tee -a autodefine.log
 
-		grep -rl '/bin/mkdir' include/ | xargs sed -i 's~/bin/mkdir~'$MKDIRNEW'~' | tee -a autodefine.log
+		grep -rl '/bin/mkdir' include/ 2>&1 | xargs sed -i "" -e 's~/bin/mkdir~'$MKDIRNEW'~' 2>&1 | tee -a autodefine.log
 
 		CHANGED=1
 
