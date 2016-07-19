@@ -37,7 +37,7 @@ Now compile with:
 ```
 Then copy the appropriate .dlls from `<path/to/SFML/bin>` (system, graphics, window) to the folder containing the newly created kanaedit.exe. The .dlls need to be in the same directory for the program to run.
 
-# Compiling on Linux and FreeBSD
+# Compiling on Linux and FreeBSD/OpenBSD
 What follows are instructions for building kana-edit on Linux and FreeBSD.
 
 ### Dependencies
@@ -69,10 +69,10 @@ For Linux:
 $ ../autodefine.sh
 $ ../configure
 ```
-For FreeBSD:
+For FreeBSD/OpenBSD:
 ```
 $ ../autodefine.sh
-$ env CPPFLAGS='-I/usr/local/include' LDFLAGS='-L/usr/local/lib' ../configure
+$ env CPPFLAGS='-I/usr/local/include -I/usr/X11R6/include' LDFLAGS='-L/usr/local/lib -L/usr/X11R6/lib' ../configure
 ```
 And now to make and run the program.
 ```
