@@ -33,6 +33,7 @@
 
 #include <fstream>
 #include <cerrno>
+#include <string.h>
 
 #ifdef _WIN32
 	#include <direct.h>

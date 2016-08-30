@@ -47,14 +47,14 @@ if ! grep -rl /resources/unifont include/ >/dev/null ; then
 fi
 
 # DEFAULT_SAVE_PATH
-if grep -Frl ../kana include/ >/dev/null ; then
+if grep -Frl "../kana" include/ >/dev/null ; then
 	
 	echo " WARNING: Replacing DEFAULT_SAVE_PATH with $HOME/Documents." | tee -a autodefine.log
 
 	if [ "$OS" = FreeBSD ] ; then
-		grep -Frl ../kana include/ 2>&1 | xargs sed -i "" -e 's~\.\./kana~'$HOME'/Documents~' 2>&1 | tee -a autodefine.log
+		grep -Frl "../kana" include/ 2>&1 | xargs sed -i "" -e 's~\.\./kana~'$HOME'/Documents~' 2>&1 | tee -a autodefine.log
 	else
-		grep -Frl ../kana include/ 2>&1 | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' 2>&1 | tee -a autodefine.log
+		grep -Frl "../kana" include/ 2>&1 | xargs sed -i 's~\.\./kana~'$HOME'/Documents~' 2>&1 | tee -a autodefine.log
 	fi
 
 	CHANGED=1
@@ -85,7 +85,38 @@ fi
 if [ $CHANGED = 1 ] ; then
 
 	echo "" | tee -a autodefine.log
-	echo " ! Some changes were made. See autodefine.log for details." | tee -a autodefine.log
+	echo " ! Some changes were made. See 'autodefine.log' and 'include/defines.h'." | tee -a autodefine.log
 	echo "" | tee -a autodefine.log
 
 fi
+
+echo ""
+echo "  Done making changes to 'defines.h'."
+echo "      [d + enter] - View changes to 'defines.h'"
+echo "      [a + enter] - Run autogen.sh"
+echo "      [enter] - Quit"
+OUTCOME=0
+while true; do
+	read io
+	case $io in
+		[Dd] ) OUTCOME=1 && break;;
+		[Aa] ) OUTCOME=2 && break;;
+		"" ) exit;;
+		* ) ;;
+	esac
+done
+
+if [ $OUTCOME = 1 ] ; then
+	exec pager include/defines.h
+	exit 0
+fi
+
+if [ $OUTCOME = 2 ] ; then
+	exec ./autogen.sh
+	exit 0
+fi
+
+echo ""
+echo "  Something went wrong. Exiting."
+echo ""
+exit 1

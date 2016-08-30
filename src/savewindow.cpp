@@ -65,7 +65,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 	sf::Text defaultbuttontext("Default", font, 12);
 	defaultbuttontext.setColor(sf::Color::Blue);
 	defaultbuttontext.setPosition( 445, 67 );
-	sf::FloatRect defaulttextbounds = defaultbuttontext.getGlobalBounds();
+	//sf::FloatRect defaulttextbounds = defaultbuttontext.getGlobalBounds();
 	
 	sf::VertexArray defaulttextunderline(sf::Lines, 2);
 	defaulttextunderline[0].position = sf::Vector2f(445, 83);
@@ -198,7 +198,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 				sf::String s_temp = filepath;
 				sf::String s_out;
 				bool foundslash = false;
-				bool endofstring = false;
+				//bool endofstring = false;
 				std::size_t tempsize = s_temp.getSize();
 				std::size_t index = tempsize + 1;
 				while ( index > 0 && !foundslash )
@@ -211,7 +211,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 				}
 				if(foundslash)
 				{
-					for ( int i = 0 ; i < index ; i++ )
+					for ( unsigned int i = 0 ; i < index ; i++ )
 					{
 						s_out += s_temp[i];
 					}
@@ -225,8 +225,10 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					int execvreturn = _mkdir(ch);
 
 					#else // Assume linux
-					char *const mkdirargs[] = { "mkdir" , "-p" , ch , NULL };
-					
+					//char *const mkdirargs[] = { "mkdir" , "-p" , ch , NULL };
+					char mkdir_a[8], mkdir_b[8];
+					char *const mkdirargs[] = { strcpy(mkdir_a, "mkdir") , strcpy(mkdir_b, "-p") , ch , NULL };
+				
 					// - Pipe - Fork - Execv -
 					int execvreturn = 0;
 					int execpipe[2];

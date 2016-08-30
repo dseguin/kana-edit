@@ -20,3 +20,6 @@ void concatenateKana (threadVariables variablestruct);
 void kanaBackspace (threadVariables variablestruct);
 void renderObjects (renderVariables *variablestruct);
 void saveOutput (sf::String OutputString, sf::Font font);
+
+#include "unifont.h"
+#include "dejavu.h"
