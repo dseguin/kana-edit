@@ -45,6 +45,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
+#if defined HAVE_CONFIG_H && !defined CONFIG_H
+	#define CONFIG_H
+	#include "config.h"
+#endif
+
 #include "defines.h"
 
 std::string to_std_string(const sf::String& original);

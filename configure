@@ -2234,6 +2234,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+KANA_DEFAULT_SAVE_DIR="$HOME/Documents"
 SAVED_LDFLAGS=$LDFLAGS
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a sed that does not truncate output" >&5
@@ -2817,13 +2818,6 @@ ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-
-ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking how to run the C++ preprocessor" >&5
 $as_echo_n "checking how to run the C++ preprocessor... " >&6; }
 if test -z "$CXXCPP"; then
@@ -2946,11 +2940,18 @@ as_fn_error $? "C++ preprocessor \"$CXXCPP\" fails sanity check
 See \`config.log' for more details" "$LINENO" 5; }
 fi
 
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+
 
 
 
@@ -3310,7 +3311,11 @@ rm -f core conftest.err conftest.$ac_objext \
 $as_echo "success" >&6; }
 LDFLAGS=$SAVED_LDFLAGS
 
-#AC_CHECK_LIB([sfml-graphics], [Font], , [AC_MSG_ERROR([Could not find libsfml-graphics.])])
+
+cat >>confdefs.h <<_ACEOF
+#define DEFAULT_SAVE_PATH "$KANA_DEFAULT_SAVE_DIR"
+_ACEOF
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -4010,6 +4015,9 @@ fi
 if test "x$UNZIP" != xyes; then :
   as_fn_error $? "Could not find unzip in PATH" "$LINENO" 5
 fi
+
+ac_config_commands="$ac_config_commands unzip"
+
 am__api_version='1.14'
 
 # Find a good install program.  We prefer a C program (faster),
@@ -5638,6 +5646,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
+    "unzip") CONFIG_COMMANDS="$CONFIG_COMMANDS unzip" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
@@ -6237,6 +6246,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
 
   case $ac_file$ac_mode in
+    "unzip":C) find "${ac_abs_top_srcdir}"/resources/ -type f -name "*.h.zip" -exec unzip -d "${ac_abs_top_srcdir}"/include/ {} ';' ;;
     "depfiles":C) test x"$AMDEP_TRUE" != x"" || {
   # Older Autoconf quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval

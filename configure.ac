@@ -1,9 +1,11 @@
 AC_INIT([kanaedit], [0.1])
 
+KANA_DEFAULT_SAVE_DIR="$HOME/Documents"
 SAVED_LDFLAGS=$LDFLAGS
 
 AC_PROG_SED
 AC_PROG_CXX
+AC_PROG_CXXCPP
 AC_LANG_PUSH([C++])
 AC_REQUIRE_CPP
 AC_CHECK_HEADERS([SFML/System.hpp] [SFML/Window.hpp] [SFML/Graphics.hpp], , [AC_MSG_ERROR([Could not find SFML header file.])])
@@ -29,11 +31,13 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <SFML/Graphics.hpp>], [sf::Font dummy]
 AC_MSG_RESULT([success])
 LDFLAGS=$SAVED_LDFLAGS
 
-#AC_CHECK_LIB([sfml-graphics], [Font], , [AC_MSG_ERROR([Could not find libsfml-graphics.])])
+AC_DEFINE_UNQUOTED([DEFAULT_SAVE_PATH], ["$KANA_DEFAULT_SAVE_DIR"], [Default save path for text files])
 AC_LANG_POP()
 AC_CHECK_FUNCS_ONCE([sprintf] [snprintf] [execvp])
 AC_CHECK_PROG([UNZIP], [unzip], [yes])
 AS_IF([test "x$UNZIP" != xyes], [AC_MSG_ERROR([Could not find unzip in PATH])])
+
+AC_CONFIG_COMMANDS([unzip], [find "${ac_abs_top_srcdir}"/resources/ -type f -name "*.h.zip" -exec unzip -d "${ac_abs_top_srcdir}"/include/ {} ';'])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile src/Makefile])

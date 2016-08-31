@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Default save path for text files */
+#undef DEFAULT_SAVE_PATH
+
 /* Define to 1 if you have the `execvp' function. */
 #undef HAVE_EXECVP
 

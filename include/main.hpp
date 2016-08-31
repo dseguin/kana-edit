@@ -7,6 +7,10 @@
 #endif
 
 // Local
+#if defined HAVE_CONFIG_H && !defined CONFIG_H
+	#define CONFIG_H
+	#include "config.h"
+#endif
 #include "../include/icon.h"
 #include "../include/defines.h"
 

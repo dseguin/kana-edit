@@ -1,11 +1,10 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-// Change these as necessary
-// (Use absolute paths where possible)
-#define FONT_UNIFONT "resources/unifont.ttf"
-#define FONT_DEJAVU "resources/dejavu.ttf"
-#define DEFAULT_SAVE_PATH "../kana"
-#define MKDIR_PATH "/bin/mkdir"
+#ifndef DEFAULT_SAVE_PATH
+	// Default directory to save text files
+	// (Can be relative or absolute)
+	#define DEFAULT_SAVE_PATH "kana"
+#endif
 
 #endif // DEFINES_H
