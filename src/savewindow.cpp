@@ -237,7 +237,7 @@ void saveOutput ( sf::String OutputString, sf::Font font )
 					if(fork() == 0)
 					{
 						close(execpipe[0]);
-						execv( MKDIR_PATH , mkdirargs );
+						execvp( "mkdir" , mkdirargs );
 						write(execpipe[1], &errno, sizeof(errno));
 						_exit(0);
 					}

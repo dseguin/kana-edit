@@ -1,28 +1,28 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if you have the `execv' function. */
-#undef HAVE_EXECV
+/* Define to 1 if you have the `execvp' function. */
+#undef HAVE_EXECVP
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `sfml-graphics' library (-lsfml-graphics). */
-#undef HAVE_LIBSFML_GRAPHICS
-
-/* Define to 1 if you have the `sfml-system' library (-lsfml-system). */
-#undef HAVE_LIBSFML_SYSTEM
-
-/* Define to 1 if you have the `sfml-window' library (-lsfml-window). */
-#undef HAVE_LIBSFML_WINDOW
-
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
+
+/* SFML graphics library */
+#undef HAVE_SFML_GRAPHICS
 
 /* Define to 1 if you have the <SFML/Graphics.hpp> header file. */
 #undef HAVE_SFML_GRAPHICS_HPP
 
+/* SFML system library */
+#undef HAVE_SFML_SYSTEM
+
 /* Define to 1 if you have the <SFML/System.hpp> header file. */
 #undef HAVE_SFML_SYSTEM_HPP
+
+/* SFML window library */
+#undef HAVE_SFML_WINDOW
 
 /* Define to 1 if you have the <SFML/Window.hpp> header file. */
 #undef HAVE_SFML_WINDOW_HPP
@@ -53,9 +53,6 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
-
-/* unzip detected. */
-#undef HAVE_UNZIP
 
 /* Name of package */
 #undef PACKAGE
