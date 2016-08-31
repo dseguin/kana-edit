@@ -181,6 +181,7 @@ ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 GREP = @GREP@
+HAVE_CXX11 = @HAVE_CXX11@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -201,7 +202,6 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -252,7 +252,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 kanaedit_SOURCES = main.cpp backspace.cpp concatenate.cpp hiragana.cpp katakana.cpp savewindow.cpp stringconvert.cpp
 kanaedit_LDADD = -lsfml-window -lsfml-system -lsfml-graphics
-kanaedit_CXXFLAGS = -Wall -Werror -Wextra -Wfatal-errors -pedantic
+kanaedit_CXXFLAGS = -Wall -Wextra
 all: all-am
 
 .SUFFIXES:

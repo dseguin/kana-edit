@@ -27,7 +27,7 @@ Use your git utility to clone this repository
 ```
 or simply download and extract the <a href="https://github.com/dseguin/kana-edit/archive/master.zip">latest version of the repo</a>. Make sure you also have the appropriate <a href="http://www.sfml-dev.org/download.php">SFML libraries</a>.
 
-Open a command prompt through your IDE to have the appropriate variables set. Change your directory to where you extracted or cloned the kana-edit repo:
+Next, unzip the .zip files in the `resources` folder and move them to the `include` folder. Open a command prompt through your IDE to have the appropriate variables set. Change your directory to where you extracted or cloned the kana-edit repo:
 ```
 > cd path/to/kana-edit
 ```
@@ -43,7 +43,7 @@ What follows are instructions for building kana-edit on Linux and {Free|Open}BSD
 ### Dependencies
 Here's a list of what you'll need to build kana-edit:
 - sfml-dev >=2.0
-- g++ (or any c++ compiler)
+- g++ (or any modern c++ compiler)
 - GNU autotools (autoconf, automake, Make)
 - unzip (to decompress font headers)
 
