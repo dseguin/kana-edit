@@ -25,9 +25,17 @@ Use your git utility to clone this repository
 ```
 > git clone https://github.com/dseguin/kana-edit.git
 ```
-or simply download and extract the <a href="https://github.com/dseguin/kana-edit/archive/master.zip">latest version of the repo</a>. Make sure you also have the appropriate <a href="http://www.sfml-dev.org/download.php">SFML libraries</a>.
+or simply download and extract the <a href="https://github.com/dseguin/kana-edit/archive/master.zip">latest version of the repo</a>.
 
-Next, unzip the .zip files in the `resources` folder and move them to the `include` folder. Open a command prompt through your IDE to have the appropriate variables set. Change your directory to where you extracted or cloned the kana-edit repo:
+### Visual Studio 2015
+Open `MSVC15/Solution_kanaedit.sln` with the Visual Studio IDE. Select your target and select `build`. VS should automatically pull the necessary sfml libraries through NuGet.
+
+You'll find kanaedit.exe and the sfml libraries in the Release or Debug folder (whatever target you chose). Copy/move them to wherever you like.
+
+### Command line
+Make sure you have the appropriate <a href="http://www.sfml-dev.org/download.php">SFML libraries</a>.
+
+Next, run `unzip_headers.bat` in the `MSVC15` folder to extract the font headers. Open a command prompt through your IDE to have the appropriate variables set. Change your directory to where you extracted or cloned the kana-edit repo:
 ```
 > cd path/to/kana-edit
 ```
@@ -44,7 +52,7 @@ What follows are instructions for building kana-edit on Linux and {Free|Open}BSD
 Here's a list of what you'll need to build kana-edit:
 - sfml-dev >=2.0
 - g++ (or any modern c++ compiler)
-- GNU autotools (autoconf, automake, Make)
+- GNU autotools 1.14 (autoconf, automake, Make)
 - unzip (to decompress font headers)
 
 Some systems don't come with unicode support right away, so make sure your system can display characters within the <a href="https://en.wikipedia.org/wiki/Hiragana_%28Unicode_block%29">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana_%28Unicode_block%29">katakana</a> blocks.
@@ -54,10 +62,6 @@ To build kana-edit, get a fresh clone:
 ```sh
 $ git clone https://github.com/dseguin/kana-edit.git
 $ cd kana-edit
-```
-For some systems that have an incompatible version of autotools, you may need to run autoreconf.
-```sh
-$ autoreconf --install
 ```
 Building kana-edit should be as simple as
 ```sh

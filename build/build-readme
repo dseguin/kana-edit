@@ -1,0 +1,16 @@
+kanaedit - Simple kana editor
+
+(c) 2015-2016 David Seguin <davidseguin@live.ca>
+Homepage - https://github.com/dseguin/kana-edit
+
+kanaedit is a simple editor for katakana and hiragana. You can type in standard romaji (english representations of kana characters) and it will "translate" what you type on the fly.
+
+The top box is the input field--where input text is displayed, and the lower box is the output field--where the processed kana is displayed. In the top left is an options menu, where you can...
+
+- Switch between Katakana mode and Hiragana mode
+- Clear the screen (both text fields)
+- Save what is in the output field to a unicode text file
+- Exit the program
+
+The program uses SFML as a display interface. Future updates may make use of SFML's other features, such as sound or networking. kanaedit currently builds on Windows, Linux, and {Free|Open}BSD.
+
