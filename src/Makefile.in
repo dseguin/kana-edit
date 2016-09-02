@@ -89,11 +89,14 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_kanaedit_OBJECTS = main.$(OBJEXT) backspace.$(OBJEXT) \
-	concatenate.$(OBJEXT) hiragana.$(OBJEXT) katakana.$(OBJEXT) \
-	savewindow.$(OBJEXT) stringconvert.$(OBJEXT)
+am_kanaedit_OBJECTS = kanaedit-main.$(OBJEXT) \
+	kanaedit-backspace.$(OBJEXT) kanaedit-concatenate.$(OBJEXT) \
+	kanaedit-hiragana.$(OBJEXT) kanaedit-katakana.$(OBJEXT) \
+	kanaedit-savewindow.$(OBJEXT) kanaedit-stringconvert.$(OBJEXT)
 kanaedit_OBJECTS = $(am_kanaedit_OBJECTS)
 kanaedit_DEPENDENCIES =
+kanaedit_LINK = $(CXXLD) $(kanaedit_CXXFLAGS) $(CXXFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -110,6 +113,10 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 AM_V_CXX = $(am__v_CXX_@AM_V@)
@@ -157,8 +164,12 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
+CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -167,7 +178,10 @@ DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+EGREP = @EGREP@
 EXEEXT = @EXEEXT@
+GREP = @GREP@
+HAVE_CXX11 = @HAVE_CXX11@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -191,11 +205,13 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+UNZIP = @UNZIP@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -236,6 +252,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 kanaedit_SOURCES = main.cpp backspace.cpp concatenate.cpp hiragana.cpp katakana.cpp savewindow.cpp stringconvert.cpp
 kanaedit_LDADD = -lsfml-window -lsfml-system -lsfml-graphics
+kanaedit_CXXFLAGS = -Wall -Wextra
 all: all-am
 
 .SUFFIXES:
@@ -276,7 +293,7 @@ clean-noinstPROGRAMS:
 
 kanaedit$(EXEEXT): $(kanaedit_OBJECTS) $(kanaedit_DEPENDENCIES) $(EXTRA_kanaedit_DEPENDENCIES) 
 	@rm -f kanaedit$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(kanaedit_OBJECTS) $(kanaedit_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(kanaedit_LINK) $(kanaedit_OBJECTS) $(kanaedit_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -284,13 +301,13 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backspace.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/concatenate.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hiragana.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/katakana.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/savewindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stringconvert.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-backspace.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-concatenate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-hiragana.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-katakana.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-savewindow.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kanaedit-stringconvert.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -305,6 +322,104 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+kanaedit-main.o: main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-main.o -MD -MP -MF $(DEPDIR)/kanaedit-main.Tpo -c -o kanaedit-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-main.Tpo $(DEPDIR)/kanaedit-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cpp' object='kanaedit-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+
+kanaedit-main.obj: main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-main.obj -MD -MP -MF $(DEPDIR)/kanaedit-main.Tpo -c -o kanaedit-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-main.Tpo $(DEPDIR)/kanaedit-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cpp' object='kanaedit-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+
+kanaedit-backspace.o: backspace.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-backspace.o -MD -MP -MF $(DEPDIR)/kanaedit-backspace.Tpo -c -o kanaedit-backspace.o `test -f 'backspace.cpp' || echo '$(srcdir)/'`backspace.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-backspace.Tpo $(DEPDIR)/kanaedit-backspace.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='backspace.cpp' object='kanaedit-backspace.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-backspace.o `test -f 'backspace.cpp' || echo '$(srcdir)/'`backspace.cpp
+
+kanaedit-backspace.obj: backspace.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-backspace.obj -MD -MP -MF $(DEPDIR)/kanaedit-backspace.Tpo -c -o kanaedit-backspace.obj `if test -f 'backspace.cpp'; then $(CYGPATH_W) 'backspace.cpp'; else $(CYGPATH_W) '$(srcdir)/backspace.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-backspace.Tpo $(DEPDIR)/kanaedit-backspace.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='backspace.cpp' object='kanaedit-backspace.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-backspace.obj `if test -f 'backspace.cpp'; then $(CYGPATH_W) 'backspace.cpp'; else $(CYGPATH_W) '$(srcdir)/backspace.cpp'; fi`
+
+kanaedit-concatenate.o: concatenate.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-concatenate.o -MD -MP -MF $(DEPDIR)/kanaedit-concatenate.Tpo -c -o kanaedit-concatenate.o `test -f 'concatenate.cpp' || echo '$(srcdir)/'`concatenate.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-concatenate.Tpo $(DEPDIR)/kanaedit-concatenate.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='concatenate.cpp' object='kanaedit-concatenate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-concatenate.o `test -f 'concatenate.cpp' || echo '$(srcdir)/'`concatenate.cpp
+
+kanaedit-concatenate.obj: concatenate.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-concatenate.obj -MD -MP -MF $(DEPDIR)/kanaedit-concatenate.Tpo -c -o kanaedit-concatenate.obj `if test -f 'concatenate.cpp'; then $(CYGPATH_W) 'concatenate.cpp'; else $(CYGPATH_W) '$(srcdir)/concatenate.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-concatenate.Tpo $(DEPDIR)/kanaedit-concatenate.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='concatenate.cpp' object='kanaedit-concatenate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-concatenate.obj `if test -f 'concatenate.cpp'; then $(CYGPATH_W) 'concatenate.cpp'; else $(CYGPATH_W) '$(srcdir)/concatenate.cpp'; fi`
+
+kanaedit-hiragana.o: hiragana.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-hiragana.o -MD -MP -MF $(DEPDIR)/kanaedit-hiragana.Tpo -c -o kanaedit-hiragana.o `test -f 'hiragana.cpp' || echo '$(srcdir)/'`hiragana.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-hiragana.Tpo $(DEPDIR)/kanaedit-hiragana.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='hiragana.cpp' object='kanaedit-hiragana.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-hiragana.o `test -f 'hiragana.cpp' || echo '$(srcdir)/'`hiragana.cpp
+
+kanaedit-hiragana.obj: hiragana.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-hiragana.obj -MD -MP -MF $(DEPDIR)/kanaedit-hiragana.Tpo -c -o kanaedit-hiragana.obj `if test -f 'hiragana.cpp'; then $(CYGPATH_W) 'hiragana.cpp'; else $(CYGPATH_W) '$(srcdir)/hiragana.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-hiragana.Tpo $(DEPDIR)/kanaedit-hiragana.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='hiragana.cpp' object='kanaedit-hiragana.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-hiragana.obj `if test -f 'hiragana.cpp'; then $(CYGPATH_W) 'hiragana.cpp'; else $(CYGPATH_W) '$(srcdir)/hiragana.cpp'; fi`
+
+kanaedit-katakana.o: katakana.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-katakana.o -MD -MP -MF $(DEPDIR)/kanaedit-katakana.Tpo -c -o kanaedit-katakana.o `test -f 'katakana.cpp' || echo '$(srcdir)/'`katakana.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-katakana.Tpo $(DEPDIR)/kanaedit-katakana.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='katakana.cpp' object='kanaedit-katakana.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-katakana.o `test -f 'katakana.cpp' || echo '$(srcdir)/'`katakana.cpp
+
+kanaedit-katakana.obj: katakana.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-katakana.obj -MD -MP -MF $(DEPDIR)/kanaedit-katakana.Tpo -c -o kanaedit-katakana.obj `if test -f 'katakana.cpp'; then $(CYGPATH_W) 'katakana.cpp'; else $(CYGPATH_W) '$(srcdir)/katakana.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-katakana.Tpo $(DEPDIR)/kanaedit-katakana.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='katakana.cpp' object='kanaedit-katakana.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-katakana.obj `if test -f 'katakana.cpp'; then $(CYGPATH_W) 'katakana.cpp'; else $(CYGPATH_W) '$(srcdir)/katakana.cpp'; fi`
+
+kanaedit-savewindow.o: savewindow.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-savewindow.o -MD -MP -MF $(DEPDIR)/kanaedit-savewindow.Tpo -c -o kanaedit-savewindow.o `test -f 'savewindow.cpp' || echo '$(srcdir)/'`savewindow.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-savewindow.Tpo $(DEPDIR)/kanaedit-savewindow.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='savewindow.cpp' object='kanaedit-savewindow.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-savewindow.o `test -f 'savewindow.cpp' || echo '$(srcdir)/'`savewindow.cpp
+
+kanaedit-savewindow.obj: savewindow.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-savewindow.obj -MD -MP -MF $(DEPDIR)/kanaedit-savewindow.Tpo -c -o kanaedit-savewindow.obj `if test -f 'savewindow.cpp'; then $(CYGPATH_W) 'savewindow.cpp'; else $(CYGPATH_W) '$(srcdir)/savewindow.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-savewindow.Tpo $(DEPDIR)/kanaedit-savewindow.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='savewindow.cpp' object='kanaedit-savewindow.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-savewindow.obj `if test -f 'savewindow.cpp'; then $(CYGPATH_W) 'savewindow.cpp'; else $(CYGPATH_W) '$(srcdir)/savewindow.cpp'; fi`
+
+kanaedit-stringconvert.o: stringconvert.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-stringconvert.o -MD -MP -MF $(DEPDIR)/kanaedit-stringconvert.Tpo -c -o kanaedit-stringconvert.o `test -f 'stringconvert.cpp' || echo '$(srcdir)/'`stringconvert.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-stringconvert.Tpo $(DEPDIR)/kanaedit-stringconvert.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='stringconvert.cpp' object='kanaedit-stringconvert.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-stringconvert.o `test -f 'stringconvert.cpp' || echo '$(srcdir)/'`stringconvert.cpp
+
+kanaedit-stringconvert.obj: stringconvert.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -MT kanaedit-stringconvert.obj -MD -MP -MF $(DEPDIR)/kanaedit-stringconvert.Tpo -c -o kanaedit-stringconvert.obj `if test -f 'stringconvert.cpp'; then $(CYGPATH_W) 'stringconvert.cpp'; else $(CYGPATH_W) '$(srcdir)/stringconvert.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/kanaedit-stringconvert.Tpo $(DEPDIR)/kanaedit-stringconvert.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='stringconvert.cpp' object='kanaedit-stringconvert.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kanaedit_CXXFLAGS) $(CXXFLAGS) -c -o kanaedit-stringconvert.obj `if test -f 'stringconvert.cpp'; then $(CYGPATH_W) 'stringconvert.cpp'; else $(CYGPATH_W) '$(srcdir)/stringconvert.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique

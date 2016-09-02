@@ -72,13 +72,13 @@ int main()
 // **************************** FONT LOADING ********************************
 	
 	sf::Font unifont;
-	if (!unifont.loadFromFile(FONT_UNIFONT))
+	if (!unifont.loadFromMemory(unifont_ttf, unifont_ttf_len))
 	{
 		return -1;
 	}
 	
 	sf::Font dejavu;
-	if (!dejavu.loadFromFile(FONT_DEJAVU))
+	if (!dejavu.loadFromMemory(dejavu_ttf, dejavu_ttf_len))
 	{
 		return -1;
 	}

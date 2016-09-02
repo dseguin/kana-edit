@@ -45,7 +45,7 @@ void concatenateKana (threadVariables variablestruct)
 	{
 		// Convert last few characters to hiragana character
 		intermediate += toHiragana( *(variablestruct.InputString) );
-		if (!(intermediate[0] == NULL))
+		if (!(intermediate[0] == '\0'))
 		{
 			// Concatenate hiragana to stringout
 			*(variablestruct.OutputString) += intermediate;
@@ -55,7 +55,7 @@ void concatenateKana (threadVariables variablestruct)
 	{
 		// Convert last few characters to hiragana character
 		intermediate += toKatakana( *(variablestruct.InputString) );
-		if (!(intermediate[0] == NULL))
+		if (!(intermediate[0] == '\0'))
 		{
 			// Concatenate hiragana to stringout
 			*(variablestruct.OutputString) += intermediate;

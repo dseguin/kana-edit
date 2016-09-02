@@ -7,6 +7,10 @@
 #endif
 
 // Local
+#if defined HAVE_CONFIG_H && !defined CONFIG_H
+	#define CONFIG_H
+	#include "config.h"
+#endif
 #include "../include/icon.h"
 #include "../include/defines.h"
 
@@ -20,3 +24,6 @@ void concatenateKana (threadVariables variablestruct);
 void kanaBackspace (threadVariables variablestruct);
 void renderObjects (renderVariables *variablestruct);
 void saveOutput (sf::String OutputString, sf::Font font);
+
+#include "unifont.h"
+#include "dejavu.h"
