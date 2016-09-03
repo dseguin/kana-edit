@@ -1,7 +1,7 @@
-AC_INIT([kanaedit], [0.1])
+AC_INIT([kanaedit], [0.2.1])
 
 KANA_DEFAULT_SAVE_DIR="$HOME/Documents"
-SAVED_LDFLAGS=$LDFLAGS
+SAVED_LIBS=$LIBS
 
 AC_PROG_CXX
 AC_PROG_CXXCPP
@@ -10,26 +10,26 @@ AX_CXX_COMPILE_STDCXX_11([noext], [optional])
 AC_REQUIRE_CPP
 AC_CHECK_HEADERS([SFML/System.hpp] [SFML/Window.hpp] [SFML/Graphics.hpp], , [AC_MSG_ERROR([Could not find SFML header file.])])
 
-LDFLAGS="$LDFLAGS -lsfml-system"
+LIBS="-lsfml-system"
 AC_MSG_CHECKING([for link against -lsfml-system])
 AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <SFML/System.hpp>], [sf::String dummy])], 
     [AC_DEFINE([HAVE_SFML_SYSTEM], [1], [SFML system library])] , [AC_MSG_ERROR([Could not link to libsfml-system.])])
 AC_MSG_RESULT([success])
-LDFLAGS=$SAVED_LDFLAGS
+LIBS=$SAVED_LIBS
 
-LDFLAGS="$LDFLAGS -lsfml-window"
+LIBS="-lsfml-window"
 AC_MSG_CHECKING([for link against -lsfml-window])
 AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <SFML/Window.hpp>], [sf::Window dummy])], 
     [AC_DEFINE([HAVE_SFML_WINDOW], [1], [SFML window library])] , [AC_MSG_ERROR([Could not link to libsfml-window.])])
 AC_MSG_RESULT([success])
-LDFLAGS=$SAVED_LDFLAGS
+LIBS=$SAVED_LIBS
 
-LDFLAGS="$LDFLAGS -lsfml-graphics"
+LIBS="-lsfml-graphics"
 AC_MSG_CHECKING([for link against -lsfml-graphics])
 AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <SFML/Graphics.hpp>], [sf::Font dummy])], 
     [AC_DEFINE([HAVE_SFML_GRAPHICS], [1], [SFML graphics library])] , [AC_MSG_ERROR([Could not link to libsfml-graphics.])])
 AC_MSG_RESULT([success])
-LDFLAGS=$SAVED_LDFLAGS
+LIBS=$SAVED_LIBS
 
 AC_DEFINE_UNQUOTED([DEFAULT_SAVE_PATH], ["$KANA_DEFAULT_SAVE_DIR"], [Default save path for text files])
 AC_LANG_POP()
