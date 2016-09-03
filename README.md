@@ -14,7 +14,7 @@ The top box is the input field--where input text is displayed, and the lower box
 
 <img src="resources/screenshot02.png">
 
-The program uses <a href="http://www.sfml-dev.org/">SFML</a> as a display interface. Future updates may make use of SFML's other features, such as sound or networking. Kana-edit currently builds on Windows, Linux, and {Free|Open}BSD.
+The program uses <a href="http://www.sfml-dev.org/">SFML</a> as a display interface. Future updates may make use of SFML's other features, such as sound or networking. Kana-edit currently builds on Windows, MacOSX, Linux, and {Free|Open}BSD.
 
 # Compiling on Windows
 Building kana-edit requires:
@@ -47,14 +47,43 @@ Now compile with:
 ```
 Then copy the appropriate .dlls from `<path/to/SFML/bin>` (system, graphics, window) to the folder containing the newly created kanaedit.exe. The .dlls need to be in the same directory for the program to run.
 
+# Compiling on MacOSX
+These instructions refer to the command line.
+
+### Dependencies
+Install the latest version of [XCode](https://developer.apple.com/xcode/). You'll need [Homebrew](http://brew.sh/) for building dependencies. Follow the instructions at http://brew.sh/. You may need to add `/usr/local/bin` to your $PATH variable. You can do this by editing your .bashrc file and adding this line:
+```
+export PATH="/usr/local/bin:$PATH"
+```
+Once you have Homebrew set up, use it to install SFML and git. On the command line:
+```
+brew update && brew install sfml && brew install git
+```
+Now use git to pull the kana-edit source code:
+```
+git clone https://github.com/dseguin/kana-edit.git
+cd kana-edit/
+```
+You're now ready to build.
+
+### Building kana-edit
+You can use the gcc or clang c++ compilers, both have been shown to work. You should now be able to build kana-edit with these commands:
+```sh
+touch -rbuild/dummy config* aclocal* Makefile*
+cd build/
+../configure
+make
+```
+If the build was successful, you'll find the `kanaedit` executable in the `src` folder.
+
 # Compiling on Linux and FreeBSD/OpenBSD
 What follows are instructions for building kana-edit on Linux and {Free|Open}BSD.
 
 ### Dependencies
 Here's a list of what you'll need to build kana-edit:
 - sfml-dev >=2.0
-- g++ (or any modern c++ compiler)
-- GNU autotools 1.14 (autoconf, automake, Make)
+- g++ or clang++
+- GNU Make
 - unzip (to decompress font headers)
 
 Some systems don't come with unicode support right away, so make sure your system can display characters within the <a href="https://en.wikipedia.org/wiki/Hiragana_%28Unicode_block%29">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana_%28Unicode_block%29">katakana</a> blocks.
@@ -65,7 +94,11 @@ To build kana-edit, get a fresh clone:
 $ git clone https://github.com/dseguin/kana-edit.git
 $ cd kana-edit
 ```
-Building kana-edit should be as simple as
+Because of a quirk in GNU Make, if the timestamps on the config scripts are off, it will request a reconfigure. This can be troublesome because autotools commands are version specific, and aclocal would need additional scripts in `autoconf-archive`. So for simplicity's sake, make sure the timestamps are the same with
+```sh
+$ touch -rbuild/dummy config* aclocal* Makefile*
+```
+Next, building kana-edit should be as simple as
 ```sh
 $ cd build
 $ ../configure
@@ -109,3 +142,5 @@ $ export LD_LIBRARY_PATH
 ```
 Then try runing the program again.
 
+# Other Issues
+Report issues/bugs/feature requests on the [GitHub issues tab](https://github.com/dseguin/kana-edit/issues).
