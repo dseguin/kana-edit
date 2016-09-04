@@ -1,5 +1,9 @@
 # Simple kana editor
-[![Build Status](https://travis-ci.org/dseguin/kana-edit.svg?branch=master)](https://travis-ci.org/dseguin/kana-edit)
+### ----Build Status----
+|CI Provider|Status|Affects|
+|-----------|------|-------|
+|Travis-CI|[![Build Status](https://travis-ci.org/dseguin/kana-edit.svg?branch=master)](https://travis-ci.org/dseguin/kana-edit)|MacOSX and Linux|
+|AppVeyor|[![Build status](https://ci.appveyor.com/api/projects/status/hmk1ukr120sh291m/branch/master?svg=true)](https://ci.appveyor.com/project/dseguin/kana-edit/branch/master)|Windows|
 
 kana-edit is a simple editor for <a href="https://en.wikipedia.org/wiki/Katakana">katakana</a> and <a href="https://en.wikipedia.org/wiki/Hiragana">hiragana</a>. You can type in standard <a href="https://en.wikipedia.org/wiki/R%C5%8Dmaji">romaji</a> (english representations of kana characters) and it will "translate" what you type *on the fly*.
 
