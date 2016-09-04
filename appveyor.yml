@@ -1,0 +1,45 @@
+version: 0.2.1-{build}
+
+skip_commits:
+  files:
+    - README.md
+    - .travis.yml
+    - LICENSE
+    - .gitignore
+    - resources/*.png
+    - build/*
+
+image: Visual Studio 2015
+
+clone_depth: 10
+
+platform:
+  - x86
+  - x64
+
+configuration: Release
+
+build:
+  project: MSVC15/Solution_kanaedit.sln
+  verbosity: normal
+
+before_build: nuget restore MSVC15/Solution_kanaedit.sln
+
+after_build:
+    - if %PLATFORM%==x86 (cd MSVC15\Release & del kanaedit.iobj & del kanaedit.ipdb & del kanaedit.pdb & del openal32.dll & copy /a ..\..\build\build-readme readme.txt & copy /a ..\..\build\build-license license.txt)
+    - if %PLATFORM%==x64 (cd MSVC15\x64\Release & del kanaedit.iobj & del kanaedit.ipdb & del kanaedit.pdb & del openal32.dll & copy /a ..\..\..\build\build-readme readme.txt & copy /a ..\..\..\build\build-license license.txt)
+
+artifacts:
+    - path: MSVC15/Release
+      name: kanaedit_latest_windows_x86
+      type: zip
+
+    - path: MSVC15/x64/Release
+      name: kanaedit_latest_windows_x64
+      type: zip
+
+notifications:
+  - provider: Email
+    to:
+      - davidseguin@live.ca
+
