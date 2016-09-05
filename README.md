@@ -1,9 +1,9 @@
 # Simple kana editor
 ### ----Build Status----
-|CI Provider|Status|Affects|
-|-----------|------|-------|
-|Travis-CI|[![Build Status](https://travis-ci.org/dseguin/kana-edit.svg?branch=master)](https://travis-ci.org/dseguin/kana-edit)|MacOSX and Linux|
-|AppVeyor|[![Build status](https://ci.appveyor.com/api/projects/status/hmk1ukr120sh291m/branch/master?svg=true)](https://ci.appveyor.com/project/dseguin/kana-edit/branch/master)|Windows|
+|CI Provider|Status|Affects|Download|
+|-----------|------|-------|--------|
+|Travis-CI|[![Build Status](https://travis-ci.org/dseguin/kana-edit.svg?branch=master)](https://travis-ci.org/dseguin/kana-edit)|MacOSX and Linux|[Linux](https://github.com/dseguin/kana-edit/releases/download/v0.2.1-deploy-14/kanaedit_0.2.1_linux_gcc.tar.gz)(64-bit) - [MacOSX](https://github.com/dseguin/kana-edit/releases/download/v0.2.1-deploy-14/kanaedit_0.2.1_osx_clang.tar.gz)|
+|AppVeyor|[![Build status](https://ci.appveyor.com/api/projects/status/hmk1ukr120sh291m/branch/master?svg=true)](https://ci.appveyor.com/project/dseguin/kana-edit/branch/master)|Windows|[x86](https://ci.appveyor.com/api/projects/dseguin/kana-edit/artifacts/MSVC15/kanaedit_latest_windows_x86.zip?branch=master&job=Platform%3A%20x86)(32-bit) - [x64](https://ci.appveyor.com/api/projects/dseguin/kana-edit/artifacts/MSVC15/x64/kanaedit_latest_windows_x64.zip?branch=master&job=Platform%3A%20x64)(64-bit)|
 
 kana-edit is a simple editor for <a href="https://en.wikipedia.org/wiki/Katakana">katakana</a> and <a href="https://en.wikipedia.org/wiki/Hiragana">hiragana</a>. You can type in standard <a href="https://en.wikipedia.org/wiki/R%C5%8Dmaji">romaji</a> (english representations of kana characters) and it will "translate" what you type *on the fly*.
 

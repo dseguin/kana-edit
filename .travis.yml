@@ -3,6 +3,12 @@ language: cpp
 git:
     depth: 10
 
+branches:
+    only:
+        - master
+        - travis_ci
+        - travis_ci_merge
+
 compiler:
     - gcc
     - clang
@@ -29,4 +35,37 @@ install:
       fi
 
 script:
-    - touch -rbuild/dummy config* aclocal* Makefile* && cd build && ../configure && make
+    - touch -rbuild/dummy config* aclocal* Makefile* && 
+      cd build && 
+      ../configure && 
+      make
+
+after_success:
+    - mkdir release
+    - mv build-readme release/readme.txt
+    - mv build-license release/license.txt
+    - mv src/kanaedit release/
+    - strip release/kanaedit
+    - if [ $TRAVIS_OS_NAME == linux ]; then
+      cp -v `find /usr/ -name "libsfml-system.*" -type f 2>/dev/null | xargs echo` release/libsfml-system.so.2 && 
+      cp -v `find /usr/ -name "libsfml-window.*" -type f 2>/dev/null | xargs echo` release/libsfml-window.so.2 && 
+      cp -v `find /usr/ -name "libsfml-graphics.*" -type f 2>/dev/null | xargs echo` release/libsfml-graphics.so.2 && 
+      cp -v `find /usr/ -name "libjpeg.so.8*" -type f 2>/dev/null | xargs echo` release/libjpeg.so.8 && 
+      cp -v `find /usr/ -name "libGLEW.*" -type f 2>/dev/null | xargs echo` release/libGLEW.so.1.6 && 
+      cp -v start.sh release/ && chmod +x release/start.sh;
+      fi
+    - if [ $TRAVIS_OS_NAME == osx ]; then
+      cp -v `find /usr/ -name "libsfml-system.*" -type f 2>/dev/null | xargs echo` release/ && 
+      cp -v `find /usr/ -name "libsfml-window.*" -type f 2>/dev/null | xargs echo` release/ && 
+      cp -v `find /usr/ -name "libsfml-graphics.*" -type f 2>/dev/null | xargs echo` release/; 
+      fi
+    - tar czvf kanaedit_0.2.1_"$TRAVIS_OS_NAME"_"$CC".tar.gz release/
+    - export FILE_TO_DEPLOY=`ls *.tar.gz`
+
+deploy:
+    provider: releases
+    file: $FILE_TO_DEPLOY
+    api_key: $BUILD_PUSH_RELEASE
+    skip_cleanup: true
+    on:
+        tags: false

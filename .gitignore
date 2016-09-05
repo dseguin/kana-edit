@@ -3,6 +3,8 @@
 *.lo
 *.o
 *.obj
+*.Po
+*.TPo
 
 # Precompiled Headers
 *.gch
@@ -34,7 +36,4 @@ lib/*
 bin/*
 
 # Ignore Vi backup files
-*.cpp~
-*.hpp~
-*.h~
-*.sh~
+*~
